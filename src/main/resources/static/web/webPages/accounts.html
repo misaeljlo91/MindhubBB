@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accounts | MindHub Bank</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+<body id="app">
+<!-- Encabezado de la página web -->
+    <header class="row g-0" v-cloak>
+        <div class="col align-self-center dropdown">
+            <a href="#" class="d-block link-light text-decoration-none" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false" style="float: right; margin-left: .5rem;"><div id="avatar" :style="{backgroundImage: 'url('+listClient.profile+')'}"></div></a>
+            <a class="d-block link-light text-decoration-none" style="float: right; font-size: larger; margin-top: 1vh;" id="name-profile">{{listClient.firstName}} {{listClient.lastName}}</a>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                <li><a class="dropdown-item" id="go-to" href="#">Profile</a></li>
+                <li><a class="dropdown-item" id="go-to" :href="'settings.html?id=' + listClient.id">Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" id="go-to" href="" @click.prevent="logOut">Sign out <img src="../assets/logout.png" alt="Sign out"></a></li>
+            </ul>
+        </div>
+    </header>
+<!-- Barra de navegación -->
+        <nav class="navbar navbar-expand-lg" id="navbar-1">
+        <a href="persons.html"><img src="../assets/logo-bank.png" alt="Bank" width="90"></a>
+        <button class="navbar-toggler btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" id="menu"><span class="menu">&equiv;</span></button>
+    </nav>
+<!-- Contenidos de la página web -->
+    <main id="accounts">
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-body position-relative" id="body-menu-canvas1">
+                <div class="flex-shrink-0 p-3 position-absolute top-0 end-0" style="width: 280px;">
+                    <p class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+                    <svg class="bi me-5" width="30" height="24"></svg>
+                    <span class="fs-5 fw-semibold">MENU</span></p>
+                    <ul class="list-unstyled ps-0">
+                        <li class="mb-1">
+                            <a class="nav-link link-dark rounded others" href="persons.html">Home <img src="../assets/home.png" alt="Home"></a>
+                        </li>
+                        <li class="mb-1">
+                            <button class="accordion-button align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#accounts-collapse" aria-expanded="true">Accounts</button>
+                            <div class="collapse" id="accounts-collapse">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                    <li class="navsider-link"><a href="accounts.html" class="nav-link link-dark rounded">Consults</a></li>
+                                    <li class="navsider-link"><a href="transfer.html" class="nav-link link-dark rounded">Transfer</a></li>
+                                    <li class="navsider-link"><a href="directory.html" class="nav-link link-dark rounded">Directory</a></li>
+                                    <li class="navsider-link"><a href="loan-application.html" class="nav-link link-dark rounded">Request loan</a></li>
+                                    <li class="navsider-link"><a href="#" class="nav-link link-dark rounded">Information</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="mb-1">
+                            <button class="accordion-button align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#cards-collapse" aria-expanded="false">Cards</button>
+                            <div class="collapse" id="cards-collapse">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                    <li class="navsider-link"><a href="debit-cards.html" class="nav-link link-dark rounded">Consults</a></li>
+                                    <li class="navsider-link" v-if="creditCards.length < 3"><a href="create-credit-cards.html" class="nav-link link-dark rounded">Request credit card</a></li>
+                                    <li class="navsider-link"><a href="#" class="nav-link link-dark rounded">Keys and limits</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="mb-1">
+                            <button class="accordion-button align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#payments-collapse" aria-expanded="false">Payments</button>
+                            <div class="collapse" id="payments-collapse">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                    <li class="navsider-link"><a href="#" class="nav-link link-dark rounded">Services payment</a></li>
+                                    <li class="navsider-link"><a href="pay-credit-card.html" class="nav-link link-dark rounded">Credit card payment</a></li>
+                                    <li class="navsider-link"><a href="pay-loan.html" class="nav-link link-dark rounded">Loans payment</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="mb-1">
+                            <button class="accordion-button align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#profile-collapse" aria-expanded="false">My profile</button>
+                            <div class="collapse" id="profile-collapse">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                    <li class="navsider-link"><a href="#" class="nav-link link-dark rounded">Personal information</a></li>
+                                    <li class="navsider-link"><a :href="'settings.html?id=' + listClient.id" class="nav-link link-dark rounded">Settings</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="mb-1" v-if="listClient.role === 'ADMIN'">
+                            <a class="nav-link link-dark rounded others" href="../manager.html">Manager <img src="../assets/manager.png" alt="Contact"></a>
+                        </li>
+                        <li class="border-top my-3"></li>
+                        <li class="mb-1">
+                            <a class="nav-link link-dark rounded others" href="#">Tickets <img src="../assets/tickets.png" alt="Tickets"></a>
+                        </li>
+                        <li class="mb-1">
+                            <a class="nav-link link-dark rounded others" href="#">Support <img src="../assets/contact.png" alt="Contact"></a>
+                        </li>
+                        <li class="mb-1">
+                            <a class="nav-link link-dark rounded others" href="" @click.prevent="logOut">Sign out <img src="../assets/logout.png" alt="Sign out"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row g-0">
+            <div class="col">
+                <nav class="navbar navbar-expand-lg" id="navbar-2">
+                    <div class="container-fluid">
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <div class="flex-shrink-0 p-3" style="width: 280px;">
+                                <p class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+                                <svg class="bi me-5" width="30" height="24"></svg>
+                                <span class="fs-5 fw-semibold">MENU</span></p>
+                                <ul class="list-unstyled ps-0">
+                                    <li class="mb-1">
+                                        <a class="nav-link link-dark rounded others" href="persons.html">Home <img src="../assets/home.png" alt="Home"></a>
+                                    </li>
+                                    <li class="mb-1">
+                                        <button class="accordion-button align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#accounts-collapse" aria-expanded="true">Accounts</button>
+                                        <div class="collapse" id="accounts-collapse">
+                                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                <li class="navsider-link"><a href="accounts.html" class="nav-link link-dark rounded">Consults</a></li>
+                                                <li class="navsider-link"><a href="transfer.html" class="nav-link link-dark rounded">Transfer</a></li>
+                                                <li class="navsider-link"><a href="directory.html" class="nav-link link-dark rounded">Directory</a></li>
+                                                <li class="navsider-link"><a href="loan-application.html" class="nav-link link-dark rounded">Request loan</a></li>
+                                                <li class="navsider-link"><a href="#" class="nav-link link-dark rounded">Information</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="mb-1">
+                                        <button class="accordion-button align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#cards-collapse" aria-expanded="false">Cards</button>
+                                        <div class="collapse" id="cards-collapse">
+                                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                <li class="navsider-link"><a href="debit-cards.html" class="nav-link link-dark rounded">Consults</a></li>
+                                                <li class="navsider-link" v-if="creditCards.length < 3"><a href="create-credit-cards.html" class="nav-link link-dark rounded">Request credit card</a></li>
+                                                <li class="navsider-link"><a href="#" class="nav-link link-dark rounded">Keys and limits</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="mb-1">
+                                        <button class="accordion-button align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#payments-collapse" aria-expanded="false">Payments</button>
+                                        <div class="collapse" id="payments-collapse">
+                                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                <li class="navsider-link"><a href="#" class="nav-link link-dark rounded">Services payment</a></li>
+                                                <li class="navsider-link"><a href="pay-credit-card.html" class="nav-link link-dark rounded">Credit card payment</a></li>
+                                                <li class="navsider-link"><a href="pay-loan.html" class="nav-link link-dark rounded">Loans payment</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="mb-1">
+                                        <button class="accordion-button align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#profile-collapse" aria-expanded="false">My profile</button>
+                                        <div class="collapse" id="profile-collapse">
+                                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                <li class="navsider-link"><a href="#" class="nav-link link-dark rounded">Personal information</a></li>
+                                                <li class="navsider-link"><a :href="'settings.html?id=' + listClient.id" class="nav-link link-dark rounded">Settings</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="mb-1" v-if="listClient.role === 'ADMIN'">
+                                        <a class="nav-link link-dark rounded others" href="../manager.html">Manager <img src="../assets/manager.png" alt="Contact"></a>
+                                    </li>
+                                    <li class="border-top my-3"></li>
+                                    <li class="mb-1">
+                                        <a class="nav-link link-dark rounded others" href="#">Tickets <img src="../assets/tickets.png" alt="Tickets"></a>
+                                    </li>
+                                    <li class="mb-1">
+                                        <a class="nav-link link-dark rounded others" href="#">Support <img src="../assets/contact.png" alt="Contact"></a>
+                                    </li>
+                                    <li class="mb-1">
+                                        <a class="nav-link link-dark rounded others" href="" @click.prevent="logOut">Sign out <img src="../assets/logout.png" alt="Sign out"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="col-md-9 content" id="loading" v-if="listAccounts.length < 0">
+                <img src="../assets/loading.svg" alt="Loading">
+            </div> 
+            <div class="col-md-9 content" v-else v-cloak>
+                <ul class="nav nav-tabs" style="margin-bottom: 1.5rem;">
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="accounts.html"><h2 class="subtitle-nav">Accounts</h2></a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="loans.html"><h2 class="subtitle-nav">Loans</h2></a>
+                    </li>
+                </ul>
+                <div class="row g-0" v-if="listAccounts.length > 0">
+                    <div class="col-md-8">
+                        <div class="card" v-for="account in listAccounts" id="accounts-card">
+                            <section id="card-body">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <p id="card-body-account"><strong id="account-nro">Account N° </strong>{{account.number}}</p>
+                                        <p id="card-body-account" style="font-weight: bold;">{{account.type}} account</p>
+                                        <p id="card-body-name">{{account.holder}}</p>
+                                    </div>
+                                    <div class="col-4 align-self-center">
+                                        <p id="card-body-balance" v-if="account.balance > 0">$ {{numberFormat(account.balance)}}</p>
+                                        <p id="card-body-balance" v-else>{{account.balance}}</p>
+                                    </div>
+                                </div>
+                                <div class="alert alert-danger d-flex align-items-center searchAlert" role="alert" style="padding: .5rem; margin: .5rem 0 .5rem 0;" v-if="account.accountCards == ''">
+                                    <p id="invalid" style="margin: 0;">This account have not any debit card associated. You can request one <a :href="'create-debit-cards.html?id=' + account.id" class="alert-link">here</a>.</p>
+                                </div>
+                            </section>
+                            <nav class="row g-0 justify-content-between card-footer" id="navbar-3">
+                                <ul class="navbar-nav col-6">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link active" aria-current="page" id="transfer" :href="'transfer.html?id='+ account.id" style="float: left; margin-right: .5rem;">Transfer</a>
+                                    </li>
+                                </ul>
+                                <ul class="navbar-nav dropdown col-6">
+                                    <li class="nav-item dropdown" id="nav-go-to">
+                                        <a class="nav-link dropdown" href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="float: right;"><i class="bi bi-three-dots-vertical"></i> Consult</a>
+                                        <ul class="dropdown-menu go-to" aria-labelledby="dropdownMenuButton1">
+                                            <li class="go-to">
+                                                <a id="go-to" class="dropdown-item" :href="'account.html?id='+ account.id">Transactions</a>
+                                            </li>
+                                            <li class="go-to">
+                                                <a id="go-to" class="dropdown-item" href="#">CBU</a>
+                                            </li>
+                                            <li class="go-to">
+                                                <a id="go-to" class="dropdown-item" href="#">Operations</a>
+                                            </li>
+                                            <li class="go-to">
+                                                <a id="go-to" class="dropdown-item" href="" @click.prevent="deleteAccount(account.id)">Delete account</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <form id="form-signin" v-if="listAccounts.length < 3" style="margin: 2rem;">
+                            <div class="form-floating" id="add-client">
+                                <a class="btn btn-primary" type="button" href="create-account.html" id="register_user">Create account</a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col navbar-account position-relative">
+                        <nav class="navbar navbar-expand-lg position-absolute end-0">
+                            <div class="container-fluid">
+                                <div class="collapse navbar-collapse">
+                                    <div class="flex-shrink-0 p-3" style="width: 220px;" id="navbar-5">
+                                        <p class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+                                        <svg class="bi me-4" width="30" height="24"></svg>
+                                        <span class="fs-5 fw-semibold">GO TO</span></p>
+                                        <ul class="list-unstyled ps-0">
+                                            <li class="mb-1">
+                                                <a class="nav-link link-dark rounded" href="transfer.html">Transfer</a>
+                                                <a class="nav-link link-dark rounded" href="directory.html">Directory</a>
+                                                <a class="nav-link link-dark rounded" href="loan-application.html">Request loan</a>
+                                                <a class="nav-link link-dark rounded" href="#">Information</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>  
+                <div class="row g-0" v-else v-cloak>
+                    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                        <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                        </symbol>
+                    </svg>
+                    <div class="alert alert-danger d-flex align-items-center searchAlert" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                        <div>You have not any associated accounts. You can open one <a class="alert-link" href="create-account.html">here</a>.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+<!-- Pie de la página web -->
+    <footer class="row g-0 align-items-center">
+        <p class="col" id="footer-page">&copy; 2021 Misael J. López | MindHub Brothers Bank</p>
+    </footer>
+
+<!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+<!-- Vue.js -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="../scripts/accounts.js"></script>
+</body>
+</html>

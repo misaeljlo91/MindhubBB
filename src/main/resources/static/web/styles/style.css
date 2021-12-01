@@ -1,0 +1,583 @@
+/* Paleta de colores */
+
+.color1 {color: #060606;}
+.color2 {color: #0c283a;}
+.color3 {color: #1a5d7c;}
+.color4 {color: #2b95c8;}
+.color5 {color: #2bc3c8;}
+
+body{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+div#loading{
+    text-align: center;
+}
+[v-cloak]{
+    display: none;
+}
+
+/* Sign in */
+
+header#signin{
+    background-color: #2b95c8;
+    padding: 1vh 5vw 0 5vw;
+}
+div#sign-in{
+    margin: 1rem 2rem 1rem 2rem;
+}
+div#navbar-sign{
+    background-color: #2bc3c8;
+    border-radius: 15px;
+}
+p#contact-sign, p#users-sign{
+    margin: 0 1rem 1rem 1rem;
+    text-align: justify;
+}
+a#register_user{
+    background-color: #2b95c8;
+    border: none;
+    color: black;
+}
+a#number-sign{
+    color: black;
+    text-decoration: none;
+    font-size: larger;
+    font-weight: bold;
+}
+a#number-sign:hover{
+    text-decoration: underline;
+}
+div#container-form{
+    background-image: url("../assets/sign-in.jpeg");
+    border-radius: 20px;
+}
+p#invalid{
+    color: red;
+    margin: .5rem 0 0 1rem;
+    font-size: small;
+}
+form#form-signin{
+    padding: 1rem;
+    margin: 3rem 1.5rem 3rem 1.5rem;
+    background-color: rgb(255, 255, 255, .5);
+    border-radius: 15px;
+}
+a#form-sign:hover{
+    font-weight: bold;
+    text-decoration: underline;
+}
+div#footer-sign{
+    padding-top: 1rem;
+    background-color: rgb(255, 255, 255, .8);
+    border: none;
+}
+
+/* Registration */
+
+div#offcanvasRight{
+    background: none;
+    border: none;
+    width: 300px;
+}
+
+/* Encabezado */
+
+header:not(header#signin){
+    padding: 1vh 2rem 1vh 2rem;
+    background-color: #1a5d7c;
+    border-top: 2vh solid #0c283a;
+}
+ul.shadow{
+    background-color: #2bc3c8;
+}
+div#avatar{
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Barra de navegación */
+
+nav#navbar-1:not(nav#navbar-2){
+    background-color: #2b95c8;
+    padding: .8rem 2rem .8rem 3rem;
+}
+button#menu,button#search{
+    width: 3rem;
+    height: 2.5rem;
+}
+span.menu{
+    color: white;
+}
+
+/* Contenido de la página */
+
+main#manager{
+    margin: 1rem 2rem 1rem 2rem;
+}
+
+/* Persons */
+
+img.img-fluid{
+    margin-bottom: 1rem;
+}
+button#button-accordion-index{
+    margin-bottom: 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+}
+thead.head-table-index{
+    background-color:  rgb(43, 195, 200, .3);
+    border-bottom: 2px solid #1a5d7c;
+    text-align: center;
+}
+p.dollar{
+    text-align: center;
+    margin: 0;
+}
+h5.quote{
+    text-align: center;
+}
+p.update{
+    margin: 1rem 0 .5rem 0;
+    font-size: small;
+    text-align: center;
+}
+
+/* Client Manager */
+
+h2.subtitle-client, h4.subtitle-client, h3.subtitle{
+    border-left: 4px solid #1a5d7c;
+    padding: .5rem .5rem .5rem 1.2rem;
+    margin: 1rem 0 1rem 2rem;
+}
+form#manager{
+    padding: 1rem;
+    background-color: #2bc3c8;
+    border-radius: 20px;
+}
+label#formulary, label#formulary_1, label#formulary_2{
+    margin: 0;
+    font-weight: bold;
+}
+div#add-client, div#add-user{
+    text-align: center;
+}
+input#formulary_add, input#formulary_sign, input#formulary_reset{
+    background-color: #2b95c8;
+    color: black;
+    border: none;
+}
+input#formulary_add:hover, input#formulary_sign:hover, input#formulary_reset:hover, a#register_user:hover{
+    font-weight: bold;
+}
+div#content-form{
+    padding: 1rem;
+    background-color: #2bc3c8;
+    border-radius: 20px;
+}
+form#form-manager{
+    margin-bottom: 1vh;
+}
+label.label-manager{
+    margin-left: 1rem;
+}
+
+/* Consults */
+
+h2.subtitle-nav{
+    color: #060606;
+    border-left: 4px solid #1a5d7c;
+    text-indent: 1.2rem;
+}
+div.flex-shrink-0{
+    background-color: #2bc3c8;
+}
+nav#navbar-2{
+    padding: 0;
+    z-index: 100;
+}
+button.navbar-toggler{
+    background-color: #1a5d7c;
+}
+button.accordion-button{
+    background-color: #2bc3c8;
+}
+button.accordion-button:hover{
+    background-color: #2b95c8;
+}
+button.accordion-button:not(.collapsed){
+    background-color: #2b95c8;
+    color: black;
+}
+button.accordion-button:hover:not(.collapsed){
+    background-color: #2b95c8;
+}
+li.navsider-link{
+    font-size: medium;
+}
+a.link-dark{
+    text-decoration: none;
+}
+a.link-dark:hover:not(a.others){
+    background-color: #2b95c8;
+    text-decoration: underline;
+    font-weight: bold;
+}
+a.others:hover{
+    background-color: #2b95c8;
+}
+div.content{
+    padding: 1rem 2rem 1rem 2rem;
+}
+h4#welcome{
+    margin-bottom: 1rem;
+}
+div.card{
+    border: 1px solid #1a5d7c;
+    margin-bottom: 1rem;
+}
+section#card-body{
+    padding: .5rem 1.5rem .5rem 1.5rem;
+}
+strong#account-nro{
+    font-size: larger;
+}
+p#card-body-account, p#no-account{
+    margin: 0;
+}
+p#card-body-balance{
+    font-size: x-large;
+    text-align: right;
+    margin: 0;
+}
+p#card-body-name{
+    margin: 0;
+    font-style: italic;
+}
+p#card-body-date{
+    margin: 0;
+}
+nav.card-footer:not(nav.card-footer.account){
+    padding: 0 1.5rem 0 1.5rem;
+    background-color: #2bc3c8;
+    border-top: 1px solid #1a5d7c;
+}
+ul.go-to{
+    background-color: #2bc3c8;
+}
+a#go-to, a#transfer, a#dropdownMenuButton1{
+    text-decoration: none;
+    color: black;
+}
+a#dropdownMenuButton1:hover, a#transfer:hover{
+    font-weight: bold;
+}
+a#go-to:hover{
+    background-color: #2b95c8;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Account */
+
+div#card-summary{
+    margin-bottom: 1rem;
+}
+div#search-con{
+    background-color: transparent;
+    border: none;
+}
+div.amount:not(div.searchAlert){
+    padding: 0;
+    margin: 0;
+}
+table#summary{
+    margin: 2rem 0 2rem 0;
+}
+div.searchAlert{
+    margin-top: 1rem;
+}
+input#back{
+    padding: .5rem 1rem .5rem 1rem;
+    background-color: #2bc3c8;
+    border-radius: 5px;
+    color: black;
+    border: none;
+}
+input#back:hover{
+    background-color: #2b95c8;
+    font-weight: bold;
+}
+div#navbar-5{
+    background-color: #2bc3c8;
+    border-radius: 10px;
+}
+nav.card-footer.account{
+    border: none;
+    background-color: transparent;
+}
+
+/* Loans */
+
+button#search-loan{
+    margin-bottom: 1rem;
+    width: 3rem;
+    height: 2.5rem;
+    float: right;
+}
+
+/* Cards */
+
+div#cards{
+    background: none;
+    border: none;
+}
+div#card-client{
+    background-image: url("../assets/card.jpg");
+    background-size: contain;
+    background-repeat: round;
+    border-radius: 10px;
+}
+div#card-account{
+    background-image: url("../assets/card-account.jpg");
+    background-size: contain;
+    background-repeat: round;
+    border-radius: 10px;
+}
+div#card-gold{
+    background-image: url("../assets/card-gold.jpg");
+    background-size: contain;
+    background-repeat: round;
+    border-radius: 10px;
+}
+div#card-silver{
+    background-image: url("../assets/card-silver.jpg");
+    background-size: contain;
+    background-repeat: round;
+    border-radius: 10px;
+}
+div#card-titanium{
+    background-image: url("../assets/card-titanium.jpg");
+    background-size: contain;
+    background-repeat: round;
+    border-radius: 10px;
+}
+img.logo-card{
+    margin: 5px 0 0 5px;
+}
+img#chip{
+    margin: 2rem 0 0 .5rem;
+}
+img#contactless{
+    margin-top: 2rem;
+}
+p#number-card{
+    font-family: 'Halter', sans-serif;
+    margin: 2vh 0 1vh 1vw;
+}
+p#date-card{
+    font-family: 'Halter', sans-serif;
+    margin: 0;
+    font-size: x-small;
+}
+p#name-card{
+    font-family: 'Halter', sans-serif;
+    margin: 1vh 0 0 1vw;
+}
+div#card-client-back{
+    background-image: url("../assets/card-back.jpg");
+    background-size: contain;
+    background-repeat: round;
+    border-radius: 10px;
+    height: 38vh;
+}
+div#card-account-back{
+    background-image: url("../assets/card-account-back.jpg");
+    background-size: contain;
+    background-repeat: round;
+    border-radius: 10px;
+    height: 38vh;
+}
+div#card-gold-back{
+    background-image: url("../assets/card-gold.jpg");
+    background-size: contain;
+    background-repeat: round;
+    border-radius: 10px;
+    height: 38vh;
+}
+div#card-silver-back{
+    background-image: url("../assets/card-silver.jpg");
+    background-size: contain;
+    background-repeat: round;
+    border-radius: 10px;
+    height: 38vh;
+}
+div#card-titanium-back{
+    background-image: url("../assets/card-titanium.jpg");
+    background-size: contain;
+    background-repeat: round;
+    border-radius: 10px;
+    height: 38vh;
+}
+div#magnetic-band, div#hologram{
+    margin-top: 1rem;
+}
+div#information{
+    margin-left: 8rem;
+}
+p#cvv{
+    font-family: 'Halter', sans-serif;
+    font-size: xx-small;
+    padding-left: .2vw;
+}
+p#number-back{
+    font-family: 'Halter', sans-serif;
+    font-size: small;
+    padding-right: .8vw;
+}
+p#condition{
+    margin: 2vh 0 0 0;
+    padding: 0 2rem 0 2rem;
+    text-align: justify;
+    font-size: x-small;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+img#cards{
+    margin-bottom: 1rem;
+}
+
+/* Transition cards */
+
+div#cards{
+    transition-duration: 0.6s;
+    transition-timing-function: ease-in-out;
+    transform-style: preserve-3d;
+}
+div#cards:active:active{
+    transform: rotateY(180deg);
+}
+div#card-client, div#card-client-back, div#card-account, div#card-account-back, div#card-gold, div#card-gold-back, div#card-silver, div#card-silver-back, div#card-titanium, div#card-titanium-back{
+    backface-visibility: hidden;
+    transform: rotateX(0deg);
+}
+div#card-client, div#card-account, div#card-gold, div#card-silver, div#card-titanium{
+    z-index: 2;
+}
+div#card-client-back, div#card-account-back, div#card-gold-back, div#card-silver-back, div#card-titanium-back{
+    position: absolute;
+    transform: rotateY(180deg);
+}
+
+/* Settings */
+
+h5.subtitle-settings{
+    border-left: 3px solid #1a5d7c;
+    padding: .5rem 0 .5rem 0;
+    margin-left: 3.5rem;
+    text-indent: 1rem;
+}
+form#form-data{
+    padding: 1rem;
+    margin: 1rem;
+    background-color: #2bc3c8;
+    border-radius: 15px;
+}
+label#profile{
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Data change */
+
+form#form-dataChange{
+    padding: 1rem;
+    background-color: #2bc3c8;
+    border-radius: 15px;
+}
+thead.head-table-list{
+    background-color:  #2bc3c8;
+    text-align: center;
+}
+tbody.body-table-list{
+    text-align: center;
+}
+a#delete_user{
+    color: black;
+    background-color: rgb(255, 0, 0, .5);
+    border: none;
+}
+a#delete_user:hover{
+    font-weight: bold;
+    background-color: rgb(255, 0, 0, .8);
+}
+
+/* Directory */
+
+form#content-directory{
+    padding: 1rem;
+    background-color: #2bc3c8;
+    border-radius: 20px;
+}
+label#form-directory{
+    margin: 0;
+    font-weight: bold;
+}
+a#delete_contact{
+    margin-left: .5rem;
+    color: black;
+    background-color: rgb(255, 0, 0);
+    border: none;
+}
+a#delete_contact:hover{
+    font-weight: bold;
+}
+/* Transfer */
+
+p#counter{
+    margin: 0;
+    padding: 0;
+    text-align: right;
+}
+
+/* Details transfer */
+
+p#transferDate{
+    padding-left: 1rem;
+    font-weight: bold;
+}
+fieldset#details{
+    font-size: x-large;
+    text-align: right;
+    margin-bottom: .5rem;
+    padding-right: 2rem;
+}
+
+/* Request loan */
+
+p#help{
+    margin: 0;
+    color: black;
+    text-indent: 1rem;
+}
+
+/* Pie de página */
+
+footer{
+    background-color: #2b95c8;
+    padding: 1rem 2rem 0 2rem;
+}
+p#footer-page{
+    color: black;
+    font-weight: bold;
+    text-align: center;
+}

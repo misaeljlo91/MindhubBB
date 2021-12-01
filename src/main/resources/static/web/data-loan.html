@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Loan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body id="app">
+<!-- Encabezado de la página web -->
+    <header class="row g-0" v-cloak>
+        <div class="col align-self-center dropdown">
+            <a href="#" class="d-block link-light text-decoration-none" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false" style="float: right; margin-left: .5rem;"><div id="avatar" :style="{backgroundImage: 'url('+listClient.profile+')'}"></div></a>
+            <a class="d-block link-light text-decoration-none" style="float: right; font-size: larger; margin-top: 1vh;" id="name-profile">{{listClient.firstName}} {{listClient.lastName}}</a>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                <li><a class="dropdown-item" id="go-to" href="#">Profile</a></li>
+                <li><a class="dropdown-item" id="go-to" :href="'webPages/settings.html?id=' + listClient.id">Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" id="go-to" href="" @click.prevent="logOut">Sign out <img src="./assets/logout.png" alt="Sign out"></a></li>
+            </ul>
+        </div>
+    </header>
+<!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg" id="navbar-1">
+        <a href="webPages/persons.html"><img src="./assets/logo-bank.png" alt="Bank" width="90"></a>
+    </nav>
+<!-- Contenidos de la página web -->
+    <main id="accounts" v-cloak>
+        <div class="row g-0">
+            <h3 class="col-6 subtitle">Loan Data</h3>
+            <div class="position-relative col-4">
+                <a class="btn btn-primary position-absolute top-50 end-0 translate-middle-y" role="button" href="loan-manager.html" id="register_user">Back</a>
+            </div>
+        </div>
+        <div class="row g-0 justify-content-center">
+            <div class="col-md-6 content">
+                <div class="row g-0 justify-content-center" id="container-form">
+                    <div class="col-md-8">
+                        <form id="form-signin" style="margin: 2rem;">
+                            <div class="mb-3">
+                                <label for="validationDefault01" class="form-label" id="form-directory">Loan name:</label>
+                                <input v-model="data.name" type="text" class="form-control" id="validationDefault01" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <label for="validationDefault02" class="form-label" id="form-directory">Maximun amount:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-text">$</div>
+                                        <input v-model="data.amount" type="number" class="form-control" id="validationDefault07" placeholder="0" step="0.01" requerid>
+                                    </div>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label for="validationDefault04" class="form-label" id="form-directory">Average interest:</label>
+                                    <div class="input-group">
+                                        <input v-model="data.average" type="text" class="form-control" id="validationDefault04" required>
+                                        <div class="input-group-text">%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="validationDefault03" class="form-label" id="form-directory">Payments:</label>
+                                <input v-model="data.payments" type="text" class="form-control" id="validationDefault03" disabled readonly>
+                            </div>
+                            <div class="form-floating" id="add-client">
+                                <a class="btn btn-primary" role="button" @click.prevent="putData" id="register_user">Save</a>
+                                <a class="btn btn-primary" role="button" @click.prevent="deleteLoan" id="delete_contact">Delete</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+<!-- Pie de la página web -->
+    <footer class="row g-0 align-items-center">
+        <p class="col" id="footer-page">&copy; 2021 Misael J. López | MindHub Brothers Bank</p>
+    </footer>
+
+<!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+<!-- Vue.js -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="./scripts/loan-manager.js"></script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details transfers | MindHub Bank</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+<body id="app">
+<!-- Encabezado de la página web -->
+    <header class="row g-0" v-cloak>
+        <div class="col align-self-center dropdown">
+            <a href="#" class="d-block link-light text-decoration-none" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false" style="float: right; margin-left: .5rem;"><div id="avatar" :style="{backgroundImage: 'url('+listClient.profile+')'}"></div></a>
+            <a class="d-block link-light text-decoration-none" style="float: right; font-size: larger; margin-top: 1vh;" id="name-profile">{{listClient.firstName}} {{listClient.lastName}}</a>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                <li><a class="dropdown-item" id="go-to" href="#">Profile</a></li>
+                <li><a class="dropdown-item" id="go-to" :href="'settings.html?id=' + listClient.id">Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" id="go-to" href="" @click.prevent="logOut">Sign out <img src="../assets/logout.png" alt="Sign out"></a></li>
+            </ul>
+        </div>
+    </header>
+<!-- Barra de navegación -->
+        <nav class="navbar navbar-expand-lg" id="navbar-1">
+        <a href="persons.html"><img src="../assets/logo-bank.png" alt="Bank" width="90"></a>
+        <button class="navbar-toggler btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" id="menu"><span class="menu">&equiv;</span></button>
+    </nav>
+<!-- Contenidos de la página web -->
+    <main id="accounts">
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-body position-relative" id="body-menu-canvas1">
+                <div class="flex-shrink-0 p-3 position-absolute top-0 end-0" style="width: 280px;">
+                    <p class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+                    <svg class="bi me-5" width="30" height="24"></svg>
+                    <span class="fs-5 fw-semibold">MENU</span></p>
+                    <ul class="list-unstyled ps-0">
+                        <li class="mb-1">
+                            <a class="nav-link link-dark rounded others" href="persons.html">Home <img src="../assets/home.png" alt="Home"></a>
+                        </li>
+                        <li class="mb-1">
+                            <button class="accordion-button align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#accounts-collapse" aria-expanded="true">Accounts</button>
+                            <div class="collapse" id="accounts-collapse">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                    <li class="navsider-link"><a href="accounts.html" class="nav-link link-dark rounded">Consults</a></li>
+                                    <li class="navsider-link"><a href="transfer.html" class="nav-link link-dark rounded">Transfer</a></li>
+                                    <li class="navsider-link"><a href="directory.html" class="nav-link link-dark rounded">Directory</a></li>
+                                    <li class="navsider-link"><a href="loan-application.html" class="nav-link link-dark rounded">Request loan</a></li>
+                                    <li class="navsider-link"><a href="#" class="nav-link link-dark rounded">Information</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="mb-1">
+                            <button class="accordion-button align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#cards-collapse" aria-expanded="false">Cards</button>
+                            <div class="collapse" id="cards-collapse">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                    <li class="navsider-link"><a href="debit-cards.html" class="nav-link link-dark rounded">Consults</a></li>
+                                    <li class="navsider-link" v-if="creditCards.length < 3"><a href="create-credit-cards.html" class="nav-link link-dark rounded">Request credit card</a></li>
+                                    <li class="navsider-link"><a href="#" class="nav-link link-dark rounded">Keys and limits</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="mb-1">
+                            <button class="accordion-button align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#payments-collapse" aria-expanded="false">Payments</button>
+                            <div class="collapse" id="payments-collapse">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                    <li class="navsider-link"><a href="#" class="nav-link link-dark rounded">Services payment</a></li>
+                                    <li class="navsider-link"><a href="pay-credit-card.html" class="nav-link link-dark rounded">Credit card payment</a></li>
+                                    <li class="navsider-link"><a href="pay-loan.html" class="nav-link link-dark rounded">Loans payment</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="mb-1">
+                            <button class="accordion-button align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#profile-collapse" aria-expanded="false">My profile</button>
+                            <div class="collapse" id="profile-collapse">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                    <li class="navsider-link"><a href="#" class="nav-link link-dark rounded">Personal information</a></li>
+                                    <li class="navsider-link"><a :href="'settings.html?id=' + listClient.id" class="nav-link link-dark rounded">Settings</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="mb-1" v-if="listClient.role === 'ADMIN'">
+                            <a class="nav-link link-dark rounded others" href="../manager.html">Manager <img src="../assets/manager.png" alt="Contact"></a>
+                        </li>
+                        <li class="border-top my-3"></li>
+                        <li class="mb-1">
+                            <a class="nav-link link-dark rounded others" href="#">Tickets <img src="../assets/tickets.png" alt="Tickets"></a>
+                        </li>
+                        <li class="mb-1">
+                            <a class="nav-link link-dark rounded others" href="#">Support <img src="../assets/contact.png" alt="Contact"></a>
+                        </li>
+                        <li class="mb-1">
+                            <a class="nav-link link-dark rounded others" href="" @click.prevent="logOut">Sign out <img src="../assets/logout.png" alt="Sign out"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row g-0">
+            <div class="col">
+                <nav class="navbar navbar-expand-lg" id="navbar-2">
+                    <div class="container-fluid">
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <div class="flex-shrink-0 p-3" style="width: 280px;">
+                                <p class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+                                <svg class="bi me-5" width="30" height="24"></svg>
+                                <span class="fs-5 fw-semibold">MENU</span></p>
+                                <ul class="list-unstyled ps-0">
+                                    <li class="mb-1">
+                                        <a class="nav-link link-dark rounded others" href="persons.html">Home <img src="../assets/home.png" alt="Home"></a>
+                                    </li>
+                                    <li class="mb-1">
+                                        <button class="accordion-button align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#accounts-collapse" aria-expanded="true">Accounts</button>
+                                        <div class="collapse" id="accounts-collapse">
+                                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                <li class="navsider-link"><a href="accounts.html" class="nav-link link-dark rounded">Consults</a></li>
+                                                <li class="navsider-link"><a href="transfer.html" class="nav-link link-dark rounded">Transfer</a></li>
+                                                <li class="navsider-link"><a href="directory.html" class="nav-link link-dark rounded">Directory</a></li>
+                                                <li class="navsider-link"><a href="loan-application.html" class="nav-link link-dark rounded">Request loan</a></li>
+                                                <li class="navsider-link"><a href="#" class="nav-link link-dark rounded">Information</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="mb-1">
+                                        <button class="accordion-button align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#cards-collapse" aria-expanded="false">Cards</button>
+                                        <div class="collapse" id="cards-collapse">
+                                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                <li class="navsider-link"><a href="debit-cards.html" class="nav-link link-dark rounded">Consults</a></li>
+                                                <li class="navsider-link" v-if="creditCards.length < 3"><a href="create-credit-cards.html" class="nav-link link-dark rounded">Request credit card</a></li>
+                                                <li class="navsider-link"><a href="#" class="nav-link link-dark rounded">Keys and limits</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="mb-1">
+                                        <button class="accordion-button align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#payments-collapse" aria-expanded="false">Payments</button>
+                                        <div class="collapse" id="payments-collapse">
+                                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                <li class="navsider-link"><a href="#" class="nav-link link-dark rounded">Services payment</a></li>
+                                                <li class="navsider-link"><a href="pay-credit-card.html" class="nav-link link-dark rounded">Credit card payment</a></li>
+                                                <li class="navsider-link"><a href="pay-loan.html" class="nav-link link-dark rounded">Loans payment</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="mb-1">
+                                        <button class="accordion-button align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#profile-collapse" aria-expanded="false">My profile</button>
+                                        <div class="collapse" id="profile-collapse">
+                                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                                <li class="navsider-link"><a href="#" class="nav-link link-dark rounded">Personal information</a></li>
+                                                <li class="navsider-link"><a :href="'settings.html?id=' + listClient.id" class="nav-link link-dark rounded">Settings</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="mb-1" v-if="listClient.role === 'ADMIN'">
+                                        <a class="nav-link link-dark rounded others" href="../manager.html">Manager <img src="../assets/manager.png" alt="Contact"></a>
+                                    </li>
+                                    <li class="border-top my-3"></li>
+                                    <li class="mb-1">
+                                        <a class="nav-link link-dark rounded others" href="#">Tickets <img src="../assets/tickets.png" alt="Tickets"></a>
+                                    </li>
+                                    <li class="mb-1">
+                                        <a class="nav-link link-dark rounded others" href="#">Support <img src="../assets/contact.png" alt="Contact"></a>
+                                    </li>
+                                    <li class="mb-1">
+                                        <a class="nav-link link-dark rounded others" href="" @click.prevent="logOut">Sign out <img src="../assets/logout.png" alt="Sign out"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="col-md-9 content" id="loading" v-if="listAccounts.length < 0">
+                <img src="../assets/loading.svg" alt="Loading">
+            </div> 
+            <div class="col-md-9 content" v-else v-cloak>
+                <h2 class="subtitle-client">Details transfers</h2>
+                <div class="row justify-content-center" style="margin-top: 2rem;">
+                    <form class="col-md-6" id="manager">
+                        <fieldset id="details" v-if="transfer.type === 'Debit' || transfer.type === 'Payment'" style="color: red;">{{transfer.reference}}</fieldset>
+                        <fieldset id="details" V-if="transfer.type === 'Credit' || transfer.type === 'Loan'" style="color: green;">{{transfer.reference}}</fieldset>
+                        <div class="row mb-3" v-if="transfer.type === 'Debit' || transfer.type === 'Payment'">
+                            <div class="col">
+                                <label for="validationDefault01" class="form-label" id="form-directory">Holder:</label>
+                                <input :value="listClient.firstName+' '+listClient.lastName" type="text" class="form-control" id="validationDefault01" disabled readonly>
+                            </div>
+                            <div class="col">
+                                <label for="validationDefault02" class="form-label" id="form-directory">Origin account:</label>
+                                <input :value="transfer.originNumber" type="text" class="form-control" id="validationDefault02" disabled readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-3" v-if="transfer.type === 'Credit'">
+                            <div class="col">
+                                <label for="validationDefault01" class="form-label" id="form-directory">Holder:</label>
+                                <input :value="transfer.holderDestination" type="text" class="form-control" id="validationDefault01" disabled readonly>
+                            </div>
+                            <div class="col">
+                                <label for="validationDefault02" class="form-label" id="form-directory">Origin account:</label>
+                                <input :value="transfer.destinationNumber" type="text" class="form-control" id="validationDefault02" disabled readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-3" v-if="transfer.type === 'Loan'">
+                            <div class="col">
+                                <label for="validationDefault01" class="form-label" id="form-directory">Approved by:</label>
+                                <input :value="transfer.holderDestination" type="text" class="form-control" id="validationDefault01" disabled readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-3" v-if="transfer.type === 'Debit'">
+                            <div class="col">
+                                <label for="validationDefault01" class="form-label" id="form-directory">Holder:</label>
+                                <input :value="transfer.holderDestination" type="text" class="form-control" id="validationDefault01" disabled readonly>
+                            </div>
+                        <div class="col">
+                                <label for="validationDefault04" class="form-label" id="form-directory">Destination account:</label>
+                                <input :value="transfer.destinationNumber" type="text" class="form-control" id="validationDefault04" disabled readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-3" v-if="transfer.type === 'Credit' || transfer.type === 'Loan'">
+                            <div class="col">
+                                <label for="validationDefault01" class="form-label" id="form-directory">Holder:</label>
+                                <input :value="listClient.firstName+' '+listClient.lastName" type="text" class="form-control" id="validationDefault01" disabled readonly>
+                            </div>
+                            <div class="col">
+                                <label for="validationDefault04" class="form-label" id="form-directory">Destination account:</label>
+                                <input :value="transfer.originNumber" type="text" class="form-control" id="validationDefault04" disabled readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-3" v-if="transfer.type === 'Payment'">
+                            <div class="col">
+                                <label for="validationDefault01" class="form-label" id="form-directory">Entity:</label>
+                                <input :value="transfer.holderDestination" type="text" class="form-control" id="validationDefault01" disabled readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="validationDefault05" class="form-label" id="form-directory">Amount:</label>
+                                <div class="input-group">
+                                    <div class="input-group-text">$</div>
+                                    <input :value="transfer.amount" type="number" class="form-control" id="validationDefault05" disabled readonly>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <label for="validationDefault07" class="form-label" id="form-directory">Type:</label>
+                                <input :value="transfer.type" type="text" class="form-control" id="validationDefault07" disabled readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="validationDefault06" class="form-label" id="form-directory">Description:</label>
+                                <input :value="transfer.description" type="text" class="form-control" id="validationDefault06" disabled readonly>
+                            </div>
+                            <div class="col">
+                                <label for="validationDefault07" class="form-label" id="form-directory">Date:</label>
+                                <input :value="momentTransfer(transfer.date)" type="text" class="form-control" id="validationDefault07" disabled readonly>
+                            </div>
+                        </div>
+                        <div class="form-floating" id="add-client">
+                            <input class="btn btn-primary" type="submit" value="Print" id="formulary_sign" style="margin-right: .5rem;" disabled>
+                            <input class="btn btn-primary" type="button" value="Back" id="formulary_reset" onclick="history.back(-1)">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+<!-- Pie de la página web -->
+    <footer class="row g-0 align-items-center">
+        <p class="col" id="footer-page">&copy; 2021 Misael J. López | MindHub Brothers Bank</p>
+    </footer>
+
+<!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+<!-- Vue.js -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="../scripts/transfer.js"></script>
+</body>
+</html>
