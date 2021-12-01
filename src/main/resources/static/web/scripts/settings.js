@@ -20,7 +20,7 @@ const app = Vue.createApp({
             },
             type3: "password", hidden3: true, show3: false,
             type4: "password", hidden4: true, show4: false,
-            typeUser: "password", hiddenUser: true, showUser: false
+            error: false
         }
     },
     created(){
@@ -145,13 +145,10 @@ const app = Vue.createApp({
                         swal({
                             text: "Data saved",
                             icon: "success",
-                            button: "Back"
+                            button: "Accept"
                         })
                         .then(response =>{
-                            axios.post("/api/login",`username=${this.data.username}&password=${this.data.password}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
-                            .then(response => {
-                                window.location.replace("persons.html")
-                            })
+                            window.location.replace("../index.html")
                         })
                     })
                     .catch(error => {
@@ -245,16 +242,8 @@ const app = Vue.createApp({
                 this.show4 = false
             }
         },
-        showPassword5(){
-            if(this.typeUser === "password"){
-                this.typeUser = "text"
-                this.hiddenUser = false
-                this.showUser = true
-            }else{
-                this.typeUser = "password"
-                this.hiddenUser = true
-                this.showUser = false
-            }
+        showAlert(){
+            this.error = true
         }
     }
 })

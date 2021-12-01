@@ -226,16 +226,13 @@
                     </div>
                     <div class="col-md-4">
                         <h5 class="subtitle-settings">Username data</h4>
-                        <form id="form-data" @submit.prevent="putUsername" style="height: 14rem;">
+                        <form id="form-data" @submit.prevent="putUsername">
                             <div class="mb-3">
                                 <label for="validationDefault05" class="form-label" id="formulary_2">Username:</label>
-                                <input v-model="data.username" type="text" class="form-control" id="validationDefault05" required>
+                                <input v-model="data.username" type="text" class="form-control" id="validationDefault05" @click.prevent="showAlert" required>
                             </div>
-                            <label for="validationDefault06" class="form-label" id="formulary_2">Password:</label>
-                            <div class="input-group mb-3">
-                                <input v-model="data.password" :type="typeUser" placeholder="&#149&#149&#149&#149&#149&#149&#149&#149" maxlength="12" class="form-control" id="validationDefault06" required>
-                                <button v-if="hiddenUser" class="btn btn-outline-secondary" type="button" id="button-addon2" @click="showPassword5" style="background-color: white;"><img src="../assets/hidden.png" alt=""></button>
-                                <button v-if="showUser" class="btn btn-outline-secondary" type="button" id="button-addon2" @click="showPassword5" style="background-color: white;"><img src="../assets/show.png" alt=""></button>
+                            <div class="alert alert-danger d-flex align-items-center searchAlert" role="alert" style="padding: .5rem; margin: .5rem 0 .5rem 0;" v-if="error">
+                                <p id="invalid" style="margin: 0 0 0 .5rem;">If confirm the change the username you will be redirect to login page.</p>
                             </div>
                             <div class="form-floating" id="add-client">
                                 <input class="btn btn-primary" type="submit" value="Save" id="formulary_sign" style="margin-right: .5rem;">
