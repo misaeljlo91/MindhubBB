@@ -70,6 +70,48 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @PutMapping("/clients/password")
+    public ResponseEntity<Object> changePassword(
+            @RequestParam String email,
+            @RequestParam String password){
+
+        Client client = clientRepository.findByEmail(email);
+
+        if(client == null){
+            return new ResponseEntity("Client not found", HttpStatus.FORBIDDEN);
+        }
+
+        if(password.length() < 8 || password.length() > 12){
+            return new ResponseEntity<>("Your password must be 8-12 characters long.", HttpStatus.FORBIDDEN);
+        }
+
+        client.setPassword(passwordEncoder.encode(password));
+
+        clientRepository.save(client);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/clients/username")
+    public ResponseEntity<Object> changeUsername(
+            @RequestParam String email,
+            @RequestParam String username){
+
+        Client client = clientRepository.findByEmail(email);
+
+        if(client == null){
+            return new ResponseEntity("Client not found", HttpStatus.FORBIDDEN);
+        }
+
+        if(clientRepository.findByUsername(username) !=  null) {
+            return new ResponseEntity<>("Username is in use. Please, try again.", HttpStatus.FORBIDDEN);
+        }
+
+        client.setUsername(username);
+
+        clientRepository.save(client);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping("/admin/clients/{id}")
     public ClientDTO getClient(@PathVariable Long id){
         return clientRepository.findById(id).map(client1 -> new ClientDTO(client1)).orElse(null);

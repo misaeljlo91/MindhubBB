@@ -87,16 +87,16 @@
                                 <button v-if="hidden" class="btn btn-outline-secondary" type="button" id="button-addon2" @click="showPassword" style="background-color: white;"><img src="./assets/hidden.png" alt=""></button>
                                 <button v-if="show" class="btn btn-outline-secondary" type="button" id="button-addon2" @click="showPassword" style="background-color: white;"><img src="./assets/show.png" alt=""></button>
                             </div>
-                            <div class="alert alert-danger d-flex align-items-center searchAlert" role="alert" style="padding: .5rem; margin: .5rem 0 .5rem 0;" v-if="error && sign.password == ''">
+                            <div class="alert alert-danger d-flex align-items-center searchAlert" role="alert" style="padding: .5rem; margin: .5rem 0 .5rem 0;" v-if="error && sign.username == '' && sign.password == ''">
                                 <p id="invalid" style="margin: 0 0 0 1rem;">Invalid username or password.</p>
                             </div>
                             <div class="mb-3">
                                 <ul class="list-unstyled ps-0">
                                     <li class="mb-1">
-                                        <a class="nav-link link-dark rounded others" id="form-sign" href="#">Forgot your username</a>
+                                        <a class="nav-link link-dark rounded others" id="form-sign" data-bs-toggle="offcanvas" aria-controls="offcanvasRight02" href="#offcanvasRight02" aria-controls="offcanvasRight02">Forgot your username</a>
                                     </li>
                                     <li class="mb-1">
-                                        <a class="nav-link link-dark rounded others" id="form-sign" href="#">Forgot your password</a>
+                                        <a class="nav-link link-dark rounded others" id="form-sign" data-bs-toggle="offcanvas" aria-controls="offcanvasRight01" href="#offcanvasRight01" aria-controls="offcanvasRight01">Forgot your password</a>
                                     </li>
                                 </ul>
                             </div>
@@ -145,6 +145,66 @@
                             </div>
                             <div class="form-floating" id="add-client">
                                 <input class="btn btn-primary" type="submit" value="Register" id="formulary_sign" style="margin-right: .5rem;">
+                                <input class="btn btn-primary" type="reset" value="Reset" id="formulary_reset">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight01" aria-labelledby="offcanvasExampleRight01">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleRight01">Password</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="row g-0 justify-content-center" id="container-form">
+                    <div class="col">
+                        <form id="form-signin" @submit.prevent="changePassword" style="margin: 2rem;">
+                            <div class="mb-3">
+                                <label for="validationDefault03" class="form-label" id="formulary_1">Email:</label>
+                                <input v-model="data.email" type="email" class="form-control" id="validationDefault03" placeholder="example@mindhub.com" required>
+                            </div>
+                            <label for="validationDefault02" class="form-label" id="formulary_2">New password:</label>
+                            <div class="input-group mb-3">
+                                <input v-model="data.password" :type="type3" placeholder="&#149&#149&#149&#149&#149&#149&#149&#149" maxlength="12" class="form-control" id="validationDefault02" required>
+                                <button v-if="hidden3" class="btn btn-outline-secondary" type="button" id="button-addon2" @click="showPassword3" style="background-color: white;"><img src="./assets/hidden.png" alt=""></button>
+                                <button v-if="show3" class="btn btn-outline-secondary" type="button" id="button-addon2" @click="showPassword3" style="background-color: white;"><img src="./assets/show.png" alt=""></button>
+                            </div>
+                            <label for="validationDefault02" class="form-label" id="formulary_2">Repeat password:</label>
+                            <div class="input-group mb-3">
+                                <input v-model="data.password2" :type="type4" placeholder="&#149&#149&#149&#149&#149&#149&#149&#149" maxlength="12" class="form-control" id="validationDefault02" required>
+                                <button v-if="hidden4" class="btn btn-outline-secondary" type="button" id="button-addon2" @click="showPassword4" style="background-color: white;"><img src="./assets/hidden.png" alt=""></button>
+                                <button v-if="show4" class="btn btn-outline-secondary" type="button" id="button-addon2" @click="showPassword4" style="background-color: white;"><img src="./assets/show.png" alt=""></button>
+                            </div>
+                            <div class="form-floating" id="add-client">
+                                <input class="btn btn-primary" type="submit" value="Change" id="formulary_sign" style="margin-right: .5rem;">
+                                <input class="btn btn-primary" type="reset" value="Reset" id="formulary_reset">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight02" aria-labelledby="offcanvasExampleRight02">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleRight02">Username</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="row g-0 justify-content-center" id="container-form">
+                    <div class="col">
+                        <form id="form-signin" @submit.prevent="changeUsername" style="margin: 2rem;">
+                            <div class="mb-3">
+                                <label for="validationDefault03" class="form-label" id="formulary_1">Email:</label>
+                                <input v-model="data.email" type="email" class="form-control" id="validationDefault03" placeholder="example@mindhub.com" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="validationDefault05" class="form-label" id="formulary_2">New username:</label>
+                                <input v-model="data.username" type="text" class="form-control" id="validationDefault05" placeholder="mindhub123" required>
+                            </div>
+                            <div class="form-floating" id="add-client">
+                                <input class="btn btn-primary" type="submit" value="Change" id="formulary_sign" style="margin-right: .5rem;">
                                 <input class="btn btn-primary" type="reset" value="Reset" id="formulary_reset">
                             </div>
                         </form>

@@ -12,8 +12,16 @@ const app = Vue.createApp({
                 email: null,
                 password: null,
             },
+            data:{
+                email: "",
+                username: "",
+                password: "",
+                password2: ""
+            },
             type: "password", hidden: true, show: false,
             type2: "password", hidden2: true, show2: false,
+            type3: "password", hidden3: true, show3: false,
+            type4: "password", hidden4: true, show4: false,
             error: false
         }
     },
@@ -25,6 +33,7 @@ const app = Vue.createApp({
             })
             .catch(error => {
                 this.error = true
+                this.sign.username = ""
                 this.sign.password = ""
             })
         },
@@ -101,6 +110,70 @@ const app = Vue.createApp({
                 })
             })
         },
+        changeUsername(){
+            swal({
+                title: "Confirmation",
+                text: "Are you sure to change the username?",
+                icon: "warning",
+                buttons: [true, "Continue"]
+            })
+            .then(confirmation => {
+                if(confirmation){
+                    axios.put(`/api/clients/username`,`email=${this.data.email}&username=${this.data.username}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+                    .then(response => {
+                        swal({
+                            text: "Data changed",
+                            icon: "success",
+                            button: "Back"
+                        })
+                        .then(response =>{
+                            window.location.replace("index.html")
+                        })
+                    })
+                    .catch(error => {
+                        swal({
+                            text: error.response.data,
+                            icon: "error"
+                        })
+                    })    
+                }
+            })
+        },
+        changePassword(){
+            swal({
+                title: "Confirmation",
+                text: "Are you sure to change the password?",
+                icon: "warning",
+                buttons: [true, "Continue"]
+            })
+            .then(confirmation => {
+                if(this.data.password == this.data.password2){
+                    axios.put(`/api/clients/password`,`email=${this.data.email}&password=${this.data.password}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+                    .then(response => {
+                        swal({
+                            text: "Data changed",
+                            icon: "success",
+                            button: "Back"
+                        })
+                        .then(response =>{
+                            window.location.replace("index.html")
+                        })
+                    })
+                    .catch(error => {
+                        swal({
+                            text: error.response.data,
+                            icon: "error"
+                        })
+                    })    
+                }else{
+                    swal({
+                        title: "Attention!",
+                        text: "Passwords not equals.",
+                        icon: "error"
+                    })
+                }
+            })
+        },
         showPassword(){
             if(this.type === "password"){
                 this.type = "text"
@@ -121,6 +194,28 @@ const app = Vue.createApp({
                 this.type2 = "password"
                 this.hidden2 = true
                 this.show2 = false
+            }
+        },
+        showPassword3(){
+            if(this.type3 === "password"){
+                this.type3 = "text"
+                this.hidden3 = false
+                this.show3 = true
+            }else{
+                this.type3 = "password"
+                this.hidden3 = true
+                this.show3 = false
+            }
+        },
+        showPassword4(){
+            if(this.type4 === "password"){
+                this.type4 = "text"
+                this.hidden4 = false
+                this.show4 = true
+            }else{
+                this.type4 = "password"
+                this.hidden4 = true
+                this.show4 = false
             }
         }
     },
