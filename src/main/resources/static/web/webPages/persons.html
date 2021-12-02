@@ -172,7 +172,7 @@
                     </div>
                 </nav>
             </div>
-            <div class="col-md-9 content" id="loading" v-if="listAccounts.length < 0">
+            <div class="col-md-9 content" id="loading" v-if="listAccounts.length <= 0">
                 <img src="../assets/loading.svg" alt="Loading">
             </div> 
             <div class="col-md-9 content" v-else v-cloak>
@@ -247,7 +247,7 @@
                                                     <p id="card-body-date">Expiration date: {{momentCard(card.thruDate)}}</p>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <a class="nav-link active" aria-current="page" id="persons" href="debit-cards.html" style="float: right;"><img src="../assets/view-details.png" alt="Details"></a>
+                                                    <a class="nav-link active" aria-current="page" id="persons" :href="'account.html?id=' + card.accountCards[0].accountID" style="float: right;"><img src="../assets/view-details.png" alt="Details"></a>
                                                 </div>
                                             </div>
                                             <div class="alert alert-danger d-flex align-items-center searchAlert" role="alert" style="padding: .5rem; margin: .5rem 0 .5rem 0;" v-if="momentCard(card.thruDate) == momentCard(new Date()) && card.accountCards != ''">

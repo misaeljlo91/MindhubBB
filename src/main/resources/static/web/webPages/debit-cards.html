@@ -227,8 +227,9 @@
                                         <p class="col text-center" id="date-card">THRU {{momentCard(card.thruDate)}}</p>
                                     </div>
                                     <div class="row g-0">
-                                        <p class="col-10" id="name-card">{{card.cardholder}}</p>
-                                        <a class="col-1" aria-current="page" href="" @click.prevent="deleteDebitCard(card.id)" style="float: right; margin: 0;"><img src="../assets/delete.png" alt="Delete" id="cards" style="margin: 0;"></a>  
+                                        <p class="col-9" id="name-card">{{card.cardholder}}</p>
+                                        <a class="col-1" aria-current="page" :href="'account.html?id=' + card.accountCards[0].accountID" style="float: right; margin: 0;"><img src="../assets/view-details.png" alt="Details" id="cards" style="margin: 0;"></a>
+                                        <a class="col-1" aria-current="page" href="" @click.prevent="deleteDebitCard(card.id)" style="float: right; margin: 0;"><img src="../assets/delete.png" alt="Delete" id="cards" style="margin: 0;"></a> 
                                     </div>
                                 </div>
                                 <div class="card-body" id="card-account" v-if="card.accountCards == ''">
