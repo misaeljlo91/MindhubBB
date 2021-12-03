@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
         @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
         @GenericGenerator(name = "native", strategy = "native")
         private Long id;
+        private String holder1;
         private String account1;
         private TransactionType type;
         private double amount;
@@ -30,8 +31,9 @@ import java.time.LocalDateTime;
     //CONSTRUCTOR
     public Transaction() { }
 
-    public Transaction(Account account, String account1, TransactionType type, double amount, String description, String numberDescription, String holder2, String account2, double balanceAccount, LocalDateTime creationDate) {
+    public Transaction(Account account, String holder1, String account1, TransactionType type, double amount, String description, String numberDescription, String holder2, String account2, double balanceAccount, LocalDateTime creationDate) {
         this.account = account;
+        this.holder1 = holder1;
         this.account1 = account1;
         this.type = type;
         this.amount = amount;
@@ -45,6 +47,7 @@ import java.time.LocalDateTime;
 
     //GETTER
     public Long getId() {return id;}
+    public String getHolder1() {return holder1;}
     public String getAccount1() {return account1;}
     public TransactionType getType() {return type;}
     public double getAmount() {return amount;}
@@ -61,6 +64,7 @@ import java.time.LocalDateTime;
 
     //SETTER
     public void setId(Long id) {this.id = id;}
+    public void setHolder1(String holder1) {this.holder1 = holder1;}
     public void setAccount1(String account1) {this.account1 = account1;}
     public void setType(TransactionType type) {this.type = type;}
     public void setAmount(double amount) {this.amount = amount;}

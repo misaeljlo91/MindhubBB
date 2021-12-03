@@ -6,13 +6,16 @@ import com.mindhub.homebanking.repositories.AccountCardRepository;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.services.PDFService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -35,6 +38,9 @@ public class TransactionController {
 
     @Autowired
     private TransactionRepository transactionRepository;
+
+    @Autowired
+    private PDFService pdfService;
 
     @GetMapping("/admin/transactions")
     public List<TransactionDTO> getListTransactions() {
@@ -108,8 +114,34 @@ public class TransactionController {
         int idDescription = (int)((Math.random()*(999-100+1))+100);
         String numberDescription = nroDescription+"/"+idDescription;
 
-        transactionRepository.save(new Transaction(originAccount,originAccount.getNumber(),TransactionType.Debit,amount,description,"D"+numberDescription,destinationAccount.getHolder(),destinationAccount.getNumber(),originAccount.getBalance(),LocalDateTime.now()));
-        transactionRepository.save(new Transaction(destinationAccount,destinationAccount.getNumber(),TransactionType.Credit,amount,description,"C"+numberDescription,originAccount.getHolder(),originAccount.getNumber(),destinationAccount.getBalance(),LocalDateTime.now()));
+        transactionRepository.save(new Transaction(originAccount, originAccount.getHolder(), originAccount.getNumber(), TransactionType.Debit, amount, description,"D"+numberDescription,  destinationAccount.getHolder(),  destinationAccount.getNumber(), originAccount.getBalance(), LocalDateTime.now()));
+        transactionRepository.save(new Transaction(destinationAccount, destinationAccount.getHolder(), destinationAccount.getNumber(), TransactionType.Credit, amount, description,"C"+numberDescription,  originAccount.getHolder(),  originAccount.getNumber(), destinationAccount.getBalance(), LocalDateTime.now()));
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/clients/current/transaction/pdf")
+    public ResponseEntity<?> transactionPDF(
+            HttpServletResponse httpServletResponse,
+            @RequestParam String numberDescription,
+            @RequestParam String client1,
+            @RequestParam String account1,
+            @RequestParam String client2,
+            @RequestParam String account2,
+            @RequestParam String type,
+            @RequestParam double amount,
+            @RequestParam String description,
+            Authentication authentication) throws IOException {
+
+        Client signClient = clientRepository.findByEmail(authentication.getName());
+
+        httpServletResponse.setContentType("application/pdf");
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attacment; filename=Transaction_"+"N°_"+numberDescription+".pdf";
+        httpServletResponse.setHeader(headerKey, headerValue);
+
+
+        this.pdfService.export(httpServletResponse, numberDescription, client1, account1, client2, account2, type, amount, description);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

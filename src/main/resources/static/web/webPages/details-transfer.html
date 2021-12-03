@@ -178,59 +178,59 @@
             <div class="col-md-9 content" v-else v-cloak>
                 <h2 class="subtitle-client">Details transfers</h2>
                 <div class="row justify-content-center" style="margin-top: 2rem;">
-                    <form class="col-md-6" id="manager">
+                    <form class="col-md-6" id="manager" @submit.prevent="generatePDF">
                         <fieldset id="details" v-if="transfer.type === 'Debit' || transfer.type === 'Payment'" style="color: red;">{{transfer.reference}}</fieldset>
                         <fieldset id="details" V-if="transfer.type === 'Credit' || transfer.type === 'Loan'" style="color: green;">{{transfer.reference}}</fieldset>
                         <div class="row mb-3" v-if="transfer.type === 'Debit' || transfer.type === 'Payment'">
                             <div class="col">
                                 <label for="validationDefault01" class="form-label" id="form-directory">Holder:</label>
-                                <input :value="listClient.firstName+' '+listClient.lastName" type="text" class="form-control" id="validationDefault01" disabled readonly>
+                                <input v-model="transfer.holderOrigin" type="text" class="form-control" id="validationDefault01" disabled readonly>
                             </div>
                             <div class="col">
                                 <label for="validationDefault02" class="form-label" id="form-directory">Origin account:</label>
-                                <input :value="transfer.originNumber" type="text" class="form-control" id="validationDefault02" disabled readonly>
+                                <input v-model="transfer.originNumber" type="text" class="form-control" id="validationDefault02" disabled readonly>
                             </div>
                         </div>
                         <div class="row mb-3" v-if="transfer.type === 'Credit'">
                             <div class="col">
                                 <label for="validationDefault01" class="form-label" id="form-directory">Holder:</label>
-                                <input :value="transfer.holderDestination" type="text" class="form-control" id="validationDefault01" disabled readonly>
+                                <input v-model="transfer.holderDestination" type="text" class="form-control" id="validationDefault01" disabled readonly>
                             </div>
                             <div class="col">
                                 <label for="validationDefault02" class="form-label" id="form-directory">Origin account:</label>
-                                <input :value="transfer.destinationNumber" type="text" class="form-control" id="validationDefault02" disabled readonly>
+                                <input v-model="transfer.destinationNumber" type="text" class="form-control" id="validationDefault02" disabled readonly>
                             </div>
                         </div>
                         <div class="row mb-3" v-if="transfer.type === 'Loan'">
                             <div class="col">
                                 <label for="validationDefault01" class="form-label" id="form-directory">Approved by:</label>
-                                <input :value="transfer.holderDestination" type="text" class="form-control" id="validationDefault01" disabled readonly>
+                                <input v-model="transfer.holderDestination" type="text" class="form-control" id="validationDefault01" disabled readonly>
                             </div>
                         </div>
                         <div class="row mb-3" v-if="transfer.type === 'Debit'">
                             <div class="col">
                                 <label for="validationDefault01" class="form-label" id="form-directory">Holder:</label>
-                                <input :value="transfer.holderDestination" type="text" class="form-control" id="validationDefault01" disabled readonly>
+                                <input v-model="transfer.holderDestination" type="text" class="form-control" id="validationDefault01" disabled readonly>
                             </div>
                         <div class="col">
                                 <label for="validationDefault04" class="form-label" id="form-directory">Destination account:</label>
-                                <input :value="transfer.destinationNumber" type="text" class="form-control" id="validationDefault04" disabled readonly>
+                                <input v-model="transfer.destinationNumber" type="text" class="form-control" id="validationDefault04" disabled readonly>
                             </div>
                         </div>
                         <div class="row mb-3" v-if="transfer.type === 'Credit' || transfer.type === 'Loan'">
                             <div class="col">
                                 <label for="validationDefault01" class="form-label" id="form-directory">Holder:</label>
-                                <input :value="listClient.firstName+' '+listClient.lastName" type="text" class="form-control" id="validationDefault01" disabled readonly>
+                                <input v-model="transfer.holderOrigin" type="text" class="form-control" id="validationDefault01" disabled readonly>
                             </div>
                             <div class="col">
                                 <label for="validationDefault04" class="form-label" id="form-directory">Destination account:</label>
-                                <input :value="transfer.originNumber" type="text" class="form-control" id="validationDefault04" disabled readonly>
+                                <input v-model="transfer.originNumber" type="text" class="form-control" id="validationDefault04" disabled readonly>
                             </div>
                         </div>
                         <div class="row mb-3" v-if="transfer.type === 'Payment'">
                             <div class="col">
                                 <label for="validationDefault01" class="form-label" id="form-directory">Entity:</label>
-                                <input :value="transfer.holderDestination" type="text" class="form-control" id="validationDefault01" disabled readonly>
+                                <input v-model="transfer.holderDestination" type="text" class="form-control" id="validationDefault01" disabled readonly>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -238,26 +238,30 @@
                                 <label for="validationDefault05" class="form-label" id="form-directory">Amount:</label>
                                 <div class="input-group">
                                     <div class="input-group-text">$</div>
-                                    <input :value="transfer.amount" type="number" class="form-control" id="validationDefault05" disabled readonly>
+                                    <input v-model="transfer.amount" type="number" class="form-control" id="validationDefault05" disabled readonly>
                                 </div>
                             </div>
                             <div class="col">
                                 <label for="validationDefault07" class="form-label" id="form-directory">Type:</label>
-                                <input :value="transfer.type" type="text" class="form-control" id="validationDefault07" disabled readonly>
+                                <input v-model="transfer.type" type="text" class="form-control" id="validationDefault07" disabled readonly>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="validationDefault06" class="form-label" id="form-directory">Description:</label>
-                                <input :value="transfer.description" type="text" class="form-control" id="validationDefault06" disabled readonly>
+                                <input v-model="transfer.description" type="text" class="form-control" id="validationDefault06" disabled readonly>
                             </div>
                             <div class="col">
                                 <label for="validationDefault07" class="form-label" id="form-directory">Date:</label>
                                 <input :value="momentTransfer(transfer.date)" type="text" class="form-control" id="validationDefault07" disabled readonly>
                             </div>
+                            <div class="col" style="display: none;">
+                                <label for="validationDefault09" class="form-label" id="form-directory">N° Reference:</label>
+                                <input v-model="transfer.reference" type="text" class="form-control" id="validationDefault09" disabled readonly>
+                            </div>
                         </div>
                         <div class="form-floating" id="add-client">
-                            <input class="btn btn-primary" type="submit" value="Print" id="formulary_sign" style="margin-right: .5rem;" disabled>
+                            <input class="btn btn-primary" type="submit" value="Print" id="formulary_sign" style="margin-right: .5rem;">
                             <input class="btn btn-primary" type="button" value="Back" id="formulary_reset" onclick="history.back(-1)">
                         </div>
                     </form>

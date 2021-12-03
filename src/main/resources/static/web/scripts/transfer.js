@@ -13,7 +13,6 @@ const app = Vue.createApp({
                 holder: "",
                 email: "",
                 amount: "",
-                typ: "",
                 description: ""
             },
             accountsDestination: [],
@@ -22,13 +21,15 @@ const app = Vue.createApp({
             button: false,
             lengthText: 0,
             transfer:{
-                date: "",
                 reference: "",
+                holderOrigin: "",
                 originNumber: "",
                 holderDestination: "",
                 destinationNumber: "",
                 amount: "",
-                description: ""
+                type: "",
+                description: "",
+                date: ""
             }
         }
     },
@@ -247,19 +248,49 @@ const app = Vue.createApp({
 
             axios.get(`/api/clients/current/transactions/${this.transferID}`)
             .then(response => {
-                this.transfer.date = response.data.creationDate
                 this.transfer.reference = response.data.numberDescription
+                this.transfer.holderOrigin = response.data.holder1
                 this.transfer.originNumber = response.data.account1
                 this.transfer.holderDestination = response.data.holder2
                 this.transfer.destinationNumber = response.data.account2
                 this.transfer.amount = response.data.amount
                 this.transfer.type = response.data.type
                 this.transfer.description = response.data.description
+                this.transfer.date = response.data.creationDate
             })
         },
         momentTransfer(date){
             return moment(date).format("DD/MMM/YY - HH:mm")
         },
+        generatePDF(){
+            swal({
+                title: "Confirmation",
+                text: "Do you want download PDF?",
+                icon: "warning",
+                buttons: [true, "Download"]
+            })
+            .then(confirmation => {
+                if(confirmation){
+                    axios.post("/api/clients/current/transaction/pdf",`numberDescription=${this.transfer.reference}&client1=${this.transfer.holderOrigin}&account1=${this.transfer.originNumber}&client2=${this.transfer.holderDestination}&account2=${this.transfer.destinationNumber}&type=${this.transfer.type}&amount=${this.transfer.amount}&description=${this.transfer.description}`,{responseType: 'blob'})
+                    .then(response=>{
+                        let file = response.headers['content-disposition']
+                        let fileName = decodeURI(file.substring(20))
+                        let link = document.createElement('a')
+                        link.href = URL.createObjectURL(response.data)
+                        link.download = fileName
+                        link.click()
+                        link.remove()
+                    })
+                    .catch(error => {
+                        swal({
+                            text: error.response.data,
+                            icon: "error",
+                            button: true
+                        })
+                    })
+                }
+            })
+        }
     },
     computed:{
         filterDestination(){

@@ -176,7 +176,7 @@ public class LoanController {
         cardClient.setBalance(cardClient.getBalance()+loan.getAmount());
 
         clientLoanRepository.save(new ClientLoan(signClient, loanRequest, loanRequest.getName(), amountPay, loan.getPayments(), monthlyPayment));
-        transactionRepository.save(new Transaction(accountClient, accountClient.getNumber(), TransactionType.Loan, loan.getAmount(), loan.getName()+" "+"loan approved", "L"+numberDescription, "Mindhub Brothers Bank, Inc.", null, accountClient.getBalance(), LocalDateTime.now()));
+        transactionRepository.save(new Transaction(accountClient, accountClient.getHolder(), accountClient.getNumber(), TransactionType.Loan, loan.getAmount(), loan.getName()+" "+"loan approved", "L"+numberDescription, "Mindhub Brothers Bank, Inc.", null, accountClient.getBalance(), LocalDateTime.now()));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

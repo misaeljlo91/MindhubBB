@@ -15,7 +15,6 @@ const app = Vue.createApp({
                 date: "",
                 cvv: "",
                 id: "",
-                name: "",
                 payments: "",
                 monthlyPayment: ""
             },
@@ -92,7 +91,6 @@ const app = Vue.createApp({
             let account = {
                 number: this.data.number,
                 id: this.data.id,
-                name: this.data.name,
                 payments: this.data.payments,
                 monthlyPayment: this.data.monthlyPayment
             }
@@ -110,7 +108,6 @@ const app = Vue.createApp({
                     axios.post("/api/clients/current/pay-with-account",{
                         number: this.data.number,
                         id: this.data.id,
-                        name: this.data.name,
                         payments: this.data.payments,
                         monthlyPayment: this.data.monthlyPayment
                     })
@@ -141,7 +138,6 @@ const app = Vue.createApp({
                 date: this.data.date,
                 cvv: this.data.cvv,
                 id: this.data.id,
-                name: this.data.name,
                 payments: this.data.payments,
                 monthlyPayment: this.data.monthlyPayment
             }
@@ -161,7 +157,6 @@ const app = Vue.createApp({
                         date: this.data.date,
                         cvv: this.data.cvv,
                         id: this.data.id,
-                        name: this.data.name,
                         payments: this.data.payments,
                         monthlyPayment: this.data.monthlyPayment
                     })
@@ -192,7 +187,6 @@ const app = Vue.createApp({
                 date: this.data.date,
                 cvv: this.data.cvv,
                 id: this.data.id,
-                name: this.data.name,
                 payments: this.data.payments,
                 monthlyPayment: this.data.monthlyPayment
             }
@@ -211,8 +205,7 @@ const app = Vue.createApp({
                         number: this.data.number,
                         date: this.data.date,
                         cvv: this.data.cvv,
-                        id: this.data.id,
-                        name: this.data.name,
+                        id: this.data.id,    
                         payments: this.data.payments,
                         monthlyPayment: this.data.monthlyPayment
                     })

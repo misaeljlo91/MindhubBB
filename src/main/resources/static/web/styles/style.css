@@ -395,35 +395,24 @@ div#card-client-back{
     background-size: contain;
     background-repeat: round;
     border-radius: 10px;
-    height: 38vh;
-}
-div#card-account-back{
-    background-image: url("../assets/card-account-back.jpg");
-    background-size: contain;
-    background-repeat: round;
-    border-radius: 10px;
-    height: 38vh;
 }
 div#card-gold-back{
     background-image: url("../assets/card-gold.jpg");
     background-size: contain;
     background-repeat: round;
     border-radius: 10px;
-    height: 38vh;
 }
 div#card-silver-back{
     background-image: url("../assets/card-silver.jpg");
     background-size: contain;
     background-repeat: round;
     border-radius: 10px;
-    height: 38vh;
 }
 div#card-titanium-back{
     background-image: url("../assets/card-titanium.jpg");
     background-size: contain;
     background-repeat: round;
     border-radius: 10px;
-    height: 38vh;
 }
 div#magnetic-band, div#hologram{
     margin-top: 1rem;
@@ -442,7 +431,7 @@ p#number-back{
     padding-right: .8vw;
 }
 p#condition{
-    margin: 2vh 0 0 0;
+    margin: 1.5vh 0 0 0;
     padding: 0 2rem 0 2rem;
     text-align: justify;
     font-size: x-small;
@@ -451,28 +440,6 @@ p#condition{
 }
 img#cards{
     margin-bottom: 1rem;
-}
-
-/* Transition cards */
-
-div#cards{
-    transition-duration: 0.6s;
-    transition-timing-function: ease-in-out;
-    transform-style: preserve-3d;
-}
-div#cards:active:active{
-    transform: rotateY(180deg);
-}
-div#card-client, div#card-client-back, div#card-account, div#card-account-back, div#card-gold, div#card-gold-back, div#card-silver, div#card-silver-back, div#card-titanium, div#card-titanium-back{
-    backface-visibility: hidden;
-    transform: rotateX(0deg);
-}
-div#card-client, div#card-account, div#card-gold, div#card-silver, div#card-titanium{
-    z-index: 2;
-}
-div#card-client-back, div#card-account-back, div#card-gold-back, div#card-silver-back, div#card-titanium-back{
-    position: absolute;
-    transform: rotateY(180deg);
 }
 
 /* Settings */

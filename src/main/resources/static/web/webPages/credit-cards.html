@@ -187,15 +187,9 @@
                         </li>
                     </ul>
                     <div class="row g-0 justify-content-between" v-if="creditCards.length > 0">
-                        <div class="col-md-8">
-                            <a class="form-check form-switch" style="float: right;">
-                                <input v-model="showCredit" id="credit" class="form-check-input" type="checkbox">
-                                <label class="form-check-label" for="credit" style="color: black;"> Show number card</label>
-                            </a>
-                        </div>
                         <div class="col-sm-5">
                             <div class="card" id="cards" v-for="card in creditCards" style="margin-top: .5rem;">
-                                <div class="card-body" id="card-gold" v-if="card.color == 'Gold'">
+                                <div class="card-body" id="card-gold" v-if="card.color == 'Gold' && hiddenCVV">
                                     <div class="row g-0">
                                         <img src="../assets/logo-card.png" alt="Logo Card" style="width: 50px; height: 40px;" class="logo-card">
                                         <div class="col" v-if="momentCard(card.thruDate) === dateNow" style="margin-left: 1rem;">
@@ -219,20 +213,25 @@
                                         </div>
                                     </div>
                                     <div class="row g-0">
-                                        <p class="col" v-if="showCredit" id="number-card">{{card.number}}</p>
-                                        <p class="col" v-else id="number-card">**** **** **** {{card.number.slice(15)}}</p>
+                                        <p class="col-10" v-if="show" id="number-card">{{card.number}}</p>
+                                        <p class="col-10" v-if="hidden" id="number-card">**** **** **** {{card.number.slice(15)}}</p>
+                                        <a class="col-1 align-self-center" aria-current="page" href="" @click.prevent="hiddenNumber(card.id)" style="float: right; margin: 0;" v-if="show"><img src="../assets/hidden.png" alt="Hidden" id="cards" style="margin: 0;" ></a>
+                                        <a class="col-1 align-self-center" aria-current="page" href="" @click.prevent="showNumber(card.id)" style="float: right; margin: 0;" v-if="hidden"><img src="../assets/show.png" alt="Show" id="cards" style="margin: 0;"></a>
                                     </div>
                                     <div class="row g-0">
                                         <p class="col text-center" id="date-card">FROM {{momentCard(card.fromDate)}}</p>
                                         <p class="col text-center" id="date-card">THRU {{momentCard(card.thruDate)}}</p>
                                     </div>
                                     <div class="row g-0">
-                                        <p class="col-9" id="name-card">{{card.cardholder}}</p>
+                                        <p class="col-8" id="name-card">{{card.cardholder}}</p>
                                         <a class="col-1" aria-current="page" :href="'credit-card.html?id=' + card.id" style="float: right; margin: 0;"><img src="../assets/view-details.png" alt="Details" id="cards" style="margin: 0;"></a>
-                                        <a class="col-1" aria-current="page" href="" @click.prevent="deleteCreditCard(card.id)" style="float: right; margin: 0;"><img src="../assets/delete.png" alt="Delete" id="cards" style="margin: 0;"></a>
+                                        <a class="col-1" aria-current="page" href="" @click.prevent="deleteCreditCard(card.id)" style="float: right; margin: 0;"><img src="../assets/delete.png" alt="Delete" id="cards" style="margin: 0;"></a> 
+                                        <div class="col position-relative">
+                                            <a class="position-absolute bottom-0 end-0" aria-current="page" href="" @click.prevent="showBack" style="float: right; margin: 0;"><img src="../assets/arrow.png" alt="Back" id="cards" style="margin: 0;"></a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="card-body" id="card-silver" v-if="card.color == 'Silver'">
+                                <div class="card-body" id="card-silver" v-if="card.color == 'Silver' && hiddenCVV">
                                     <div class="row g-0">
                                         <img src="../assets/logo-card.png" alt="Logo Card" style="width: 50px; height: 40px;" class="logo-card">
                                         <div class="col" v-if="momentCard(card.thruDate) === dateNow" style="margin-left: 1rem;">
@@ -256,20 +255,25 @@
                                         </div>
                                     </div>
                                     <div class="row g-0">
-                                        <p class="col" v-if="showCredit" id="number-card">{{card.number}}</p>
-                                        <p class="col" v-else id="number-card">**** **** **** {{card.number.slice(15)}}</p>
+                                        <p class="col-10" v-if="show" id="number-card">{{card.number}}</p>
+                                        <p class="col-10" v-if="hidden" id="number-card">**** **** **** {{card.number.slice(15)}}</p>
+                                        <a class="col-1 align-self-center" aria-current="page" href="" @click.prevent="hiddenNumber(card.id)" style="float: right; margin: 0;" v-if="show"><img src="../assets/hidden.png" alt="Hidden" id="cards" style="margin: 0;" ></a>
+                                        <a class="col-1 align-self-center" aria-current="page" href="" @click.prevent="showNumber(card.id)" style="float: right; margin: 0;" v-if="hidden"><img src="../assets/show.png" alt="Show" id="cards" style="margin: 0;"></a>
                                     </div>
                                     <div class="row g-0">
                                         <p class="col text-center" id="date-card">FROM {{momentCard(card.fromDate)}}</p>
                                         <p class="col text-center" id="date-card">THRU {{momentCard(card.thruDate)}}</p>
                                     </div>
                                     <div class="row g-0">
-                                        <p class="col-9" id="name-card">{{card.cardholder}}</p>
+                                        <p class="col-8" id="name-card">{{card.cardholder}}</p>
                                         <a class="col-1" aria-current="page" :href="'credit-card.html?id=' + card.id" style="float: right; margin: 0;"><img src="../assets/view-details.png" alt="Details" id="cards" style="margin: 0;"></a>
-                                        <a class="col-1" aria-current="page" href="" @click.prevent="deleteCreditCard(card.id)" style="float: right; margin: 0;"><img src="../assets/delete.png" alt="Delete" id="cards" style="margin: 0;"></a>
+                                        <a class="col-1" aria-current="page" href="" @click.prevent="deleteCreditCard(card.id)" style="float: right; margin: 0;"><img src="../assets/delete.png" alt="Delete" id="cards" style="margin: 0;"></a> 
+                                        <div class="col position-relative">
+                                            <a class="position-absolute bottom-0 end-0" aria-current="page" href="" @click.prevent="showBack" style="float: right; margin: 0;"><img src="../assets/arrow.png" alt="Back" id="cards" style="margin: 0;"></a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="card-body" id="card-titanium" v-if="card.color == 'Titanium'" style="color: grey;">
+                                <div class="card-body" id="card-titanium" v-if="card.color == 'Titanium' && hiddenCVV" style="color: grey;">
                                     <div class="row g-0">
                                         <img src="../assets/logo-card.png" alt="Logo Card" style="width: 50px; height: 40px;" class="logo-card">
                                         <div class="col" v-if="momentCard(card.thruDate) === dateNow" style="margin-left: 1rem;">
@@ -293,20 +297,25 @@
                                         </div>
                                     </div>
                                     <div class="row g-0">
-                                        <p class="col" v-if="showCredit" id="number-card">{{card.number}}</p>
-                                        <p class="col" v-else id="number-card">**** **** **** {{card.number.slice(15)}}</p>
+                                        <p class="col-10" v-if="show" id="number-card">{{card.number}}</p>
+                                        <p class="col-10" v-if="hidden" id="number-card">**** **** **** {{card.number.slice(15)}}</p>
+                                        <a class="col-1 align-self-center" aria-current="page" href="" @click.prevent="hiddenNumber(card.id)" style="float: right; margin: 0;" v-if="show"><img src="../assets/hidden-titanium.png" alt="Hidden" id="cards" style="margin: 0;" ></a>
+                                        <a class="col-1 align-self-center" aria-current="page" href="" @click.prevent="showNumber(card.id)" style="float: right; margin: 0;" v-if="hidden"><img src="../assets/show-titanium.png" alt="Show" id="cards" style="margin: 0;"></a>
                                     </div>
                                     <div class="row g-0">
                                         <p class="col text-center" id="date-card">FROM {{momentCard(card.fromDate)}}</p>
                                         <p class="col text-center" id="date-card">THRU {{momentCard(card.thruDate)}}</p>
                                     </div>
                                     <div class="row g-0">
-                                        <p class="col-9" id="name-card">{{card.cardholder}}</p>
+                                        <p class="col-8" id="name-card">{{card.cardholder}}</p>
                                         <a class="col-1" aria-current="page" :href="'credit-card.html?id=' + card.id" style="float: right; margin: 0;"><img src="../assets/view-details-titanium.png" alt="Details" id="cards" style="margin: 0;"></a>
-                                        <a class="col-1" aria-current="page" href="" @click.prevent="deleteCreditCard(card.id)" style="float: right; margin: 0;"><img src="../assets/delete-titanium.png" alt="Delete" id="cards" style="margin: 0;"></a>
+                                        <a class="col-1" aria-current="page" href="" @click.prevent="deleteCreditCard(card.id)" style="float: right; margin: 0;"><img src="../assets/delete-titanium.png" alt="Delete" id="cards" style="margin: 0;"></a> 
+                                        <div class="col position-relative">
+                                            <a class="position-absolute bottom-0 end-0" aria-current="page" href="" @click.prevent="showBack" style="float: right; margin: 0;"><img src="../assets/arrow-titanium.png" alt="Back" id="cards" style="margin: 0;"></a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="card-body" id="card-gold-back" v-if="card.color == 'Gold'">                               
+                                <div class="card-body" id="card-gold-back" v-if="card.color == 'Gold' &&showCVV">                               
                                     <div class="row g-0 position-relative" id="magnetic-band">
                                         <img src="../assets/magnetic-band.png" alt="Band" id="magnetic-band">
                                     </div>
@@ -320,15 +329,18 @@
                                         </div>
                                         <div class="col align-self-center position-relative">
                                             <img src="../assets/cvv.png" alt="CVV" class="position-absolute top-0 star-0 translate-middle-y" height="20">
-                                            <p class="position-absolute position-absolute top-0 star-0 translate-middle-y" v-if="showCredit" id="cvv">{{card.cvv}}</p>
-                                            <p class="position-absolute position-absolute top-0 star-0 translate-middle-y" v-else id="cvv">&#149&#149&#149</p>
+                                            <p class="position-absolute position-absolute top-0 star-0 translate-middle-y" v-if="show" id="cvv">{{card.cvv}}</p>
+                                            <p class="position-absolute position-absolute top-0 star-0 translate-middle-y" v-if="hidden" id="cvv">&#149&#149&#149</p>
                                         </div>
                                     </div>
                                     <div class="row g-0">
                                         <p id="condition">This card is property of Mindhub Brothers Bank. Misuse is criminal offence. If found, please return to Mindhub Brothers Bank or to the nearest bank.</p>
                                     </div>
+                                    <div class="row g-0" style="float: right; margin: 0;">
+                                        <a class="col" aria-current="page" href="" @click.prevent="showFront" style="float: right; margin: 0;"><img src="../assets/arrow.png" alt="Back" id="cards" style="margin: 0;"></a>
+                                    </div>
                                 </div>
-                                <div class="card-body" id="card-silver-back" v-if="card.color == 'Silver'">                               
+                                <div class="card-body" id="card-silver-back" v-if="card.color == 'Silver' &&showCVV">                               
                                     <div class="row g-0 position-relative" id="magnetic-band">
                                         <img src="../assets/magnetic-band.png" alt="Band" id="magnetic-band">
                                     </div>
@@ -342,15 +354,18 @@
                                         </div>
                                         <div class="col align-self-center position-relative">
                                             <img src="../assets/cvv.png" alt="CVV" class="position-absolute top-0 star-0 translate-middle-y" height="20">
-                                            <p class="position-absolute position-absolute top-0 star-0 translate-middle-y" v-if="showCredit" id="cvv">{{card.cvv}}</p>
-                                            <p class="position-absolute position-absolute top-0 star-0 translate-middle-y" v-else id="cvv">&#149&#149&#149</p>
+                                            <p class="position-absolute position-absolute top-0 star-0 translate-middle-y" v-if="show" id="cvv">{{card.cvv}}</p>
+                                            <p class="position-absolute position-absolute top-0 star-0 translate-middle-y" v-if="hidden" id="cvv">&#149&#149&#149</p>
                                         </div>
                                     </div>
                                     <div class="row g-0">
                                         <p id="condition">This card is property of Mindhub Brothers Bank. Misuse is criminal offence. If found, please return to Mindhub Brothers Bank or to the nearest bank.</p>
                                     </div>
+                                    <div class="row g-0" style="float: right; margin: 0;">
+                                        <a class="col" aria-current="page" href="" @click.prevent="showFront" style="float: right; margin: 0;"><img src="../assets/arrow.png" alt="Back" id="cards" style="margin: 0;"></a>
+                                    </div>
                                 </div>
-                                <div class="card-body" id="card-titanium-back" v-if="card.color == 'Titanium'" style="color: grey;">                               
+                                <div class="card-body" id="card-titanium-back" v-if="card.color == 'Titanium' &&showCVV" style="color: grey;">                               
                                     <div class="row g-0 position-relative" id="magnetic-band">
                                         <img src="../assets/magnetic-band.png" alt="Band" id="magnetic-band">
                                     </div>
@@ -364,12 +379,15 @@
                                         </div>
                                         <div class="col align-self-center position-relative">
                                             <img src="../assets/cvv.png" alt="CVV" class="position-absolute top-0 star-0 translate-middle-y" height="20">
-                                            <p class="position-absolute position-absolute top-0 star-0 translate-middle-y" v-if="showCredit" id="cvv" style="color: black;">{{card.cvv}}</p>
-                                            <p class="position-absolute position-absolute top-0 star-0 translate-middle-y" v-else id="cvv" style="color: black;">&#149&#149&#149</p>
+                                            <p class="position-absolute position-absolute top-0 star-0 translate-middle-y" v-if="show" id="cvv" style="color: black;">{{card.cvv}}</p>
+                                            <p class="position-absolute position-absolute top-0 star-0 translate-middle-y" v-if="hidden" id="cvv">&#149&#149&#149</p>
                                         </div>
                                     </div>
                                     <div class="row g-0">
                                         <p id="condition">This card is property of Mindhub Brothers Bank. Misuse is criminal offence. If found, please return to Mindhub Brothers Bank or to the nearest bank.</p>
+                                    </div>
+                                    <div class="row g-0" style="float: right; margin: 0;">
+                                        <a class="col" aria-current="page" href="" @click.prevent="showFront" style="float: right; margin: 0;"><img src="../assets/arrow-titanium.png" alt="Back" id="cards" style="margin: 0;"></a>
                                     </div>
                                 </div>
                             </div>

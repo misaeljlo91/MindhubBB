@@ -176,7 +176,26 @@
                 <img src="../assets/loading.svg" alt="Loading">
             </div> 
             <div class="col-md-9 content" v-else v-cloak>
-                <h2 class="subtitle-client">Summary</h2>
+                <div class="row">
+                    <h2 class="col-9 subtitle-client">Summary</h2>
+                    <nav class="col navbar navbar-expand-lg account" id="navbar-4">
+                        <a class="nav-link dropdown navbar-toggler" href="" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></a>
+                        <ul class="dropdown-menu go-to" aria-labelledby="dropdownMenuButton1">
+                            <li class="go-to">
+                                <div class="flex-shrink-0" style="width: 180px;" id="navbar-5">
+                                    <ul class="list-unstyled ps-0">
+                                        <li class="mb-1">
+                                            <a class="nav-link link-dark rounded" :href="'transfer.html?id=' + listAccount.id">Transfer</a>
+                                            <a class="nav-link link-dark rounded" href="directory.html">Directory</a>
+                                            <a class="nav-link link-dark rounded" href="#">Information</a>
+                                            <a class="nav-link link-dark rounded" href="" @click.prevent="deleteAccount">Delete account</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
                 <div class="row g-0">
                     <div class="col-md-8">
                         <div class="card" id="card-summary">
@@ -192,24 +211,10 @@
                                         <p id="card-body-balance" v-else>{{listAccount.balance}}</p>
                                     </div>
                                 </div>
+                                <div class="alert alert-danger d-flex align-items-center searchAlert" role="alert" style="padding: .5rem; margin: .5rem 0 .5rem 0;" v-if="listAccount.accountCards == ''">
+                                    <p id="invalid" style="margin: 0;">This account have not any debit card associated. You can request one <a :href="'create-debit-cards.html?id=' + listAccount.id" class="alert-link">here</a>.</p>
+                                </div>
                             </section>
-                            <nav class="navbar navbar-expand-lg card-footer account" id="navbar-4">
-                                <a class="nav-link dropdown navbar-toggler" href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></a>
-                                <ul class="dropdown-menu go-to" aria-labelledby="dropdownMenuButton1">
-                                    <li class="go-to">
-                                        <div class="flex-shrink-0" style="width: 180px;" id="navbar-5">
-                                            <ul class="list-unstyled ps-0">
-                                                <li class="mb-1">
-                                                    <a class="nav-link link-dark rounded" :href="'transfer.html?id=' + listAccount.id">Transfer</a>
-                                                    <a class="nav-link link-dark rounded" href="directory.html">Directory</a>
-                                                    <a class="nav-link link-dark rounded" href="#">Information</a>
-                                                    <a class="nav-link link-dark rounded" href="" @click.prevent="deleteAccount">Delete account</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </nav>
                         </div>
                     </div>
                     <div class="col navbar-account position-relative">

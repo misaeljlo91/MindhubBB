@@ -110,7 +110,7 @@ public class CreditCardController {
         creditCard.setAmountLimit(creditCard.getAmountLimit() + payCardAccount.getAmount());
         creditCard.setBalance(creditCard.getBalance() - payCardAccount.getAmount());
 
-        transactionRepository.save(new Transaction(originAccount, originAccount.getNumber(), TransactionType.Payment, payCardAccount.getAmount(), "Pay credit card", "P"+numberDescription, creditCard.getCardholder(), creditCard.getNumber(), originAccount.getBalance(), LocalDateTime.now()));
+        transactionRepository.save(new Transaction(originAccount, originAccount.getHolder(), originAccount.getNumber(), TransactionType.Payment, payCardAccount.getAmount(), "Pay credit card", "P"+numberDescription, creditCard.getCardholder(), creditCard.getNumber(), originAccount.getBalance(), LocalDateTime.now()));
         transactionCardRepository.save(new TransactionCard(creditCard, TransactionType.Credit, "Pay from "+originAccount.getNumber(), "C"+numberDescription, creditCard.getAmountLimit(), creditCard.getBalance(), LocalDateTime.now()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -172,7 +172,7 @@ public class CreditCardController {
         creditCard.setAmountLimit(creditCard.getAmountLimit() + payCreditCardDebit.getAmount());
         creditCard.setBalance(creditCard.getBalance() - payCreditCardDebit.getAmount());
 
-        transactionRepository.save(new Transaction(originAccount, originAccount.getNumber(), TransactionType.Payment, payCreditCardDebit.getAmount(), "Pay credit card", "P"+numberDescription, creditCard.getCardholder(), creditCard.getNumber(), originAccount.getBalance(), LocalDateTime.now()));
+        transactionRepository.save(new Transaction(originAccount, originAccount.getHolder(), originAccount.getNumber(), TransactionType.Payment, payCreditCardDebit.getAmount(), "Pay credit card", "P"+numberDescription, creditCard.getCardholder(), creditCard.getNumber(), originAccount.getBalance(), LocalDateTime.now()));
         transactionCardRepository.save(new TransactionCard(creditCard, TransactionType.Credit, "Pay from "+originAccount.getNumber(), "C"+numberDescription, creditCard.getAmountLimit(), creditCard.getBalance(), LocalDateTime.now()));
         return new ResponseEntity<>(HttpStatus.OK);
     }

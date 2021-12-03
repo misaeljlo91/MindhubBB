@@ -73,7 +73,7 @@ public class ClientLoanController {
 
         ClientLoan loanRequested = clientLoanRepository.findById(payLoan.getId()).orElse(null);
 
-        if(payLoan.getNumber().isEmpty() || payLoan.getName().isEmpty() || String.valueOf(payLoan.getMonthlyPayment()).isEmpty()) {
+        if(payLoan.getNumber().isEmpty() || String.valueOf(payLoan.getMonthlyPayment()).isEmpty()) {
             return new ResponseEntity<>("The fields cannot be empty.", HttpStatus.FORBIDDEN);
         }
 
@@ -107,12 +107,12 @@ public class ClientLoanController {
         String numberDescription = nroDescription+"/"+idDescription;
 
         originAccount.setBalance(originAccount.getBalance()- payLoan.getMonthlyPayment());
-        originCard.setBalance(originCard.getBalance()- payLoan.getMonthlyPayment());
+        originCard.setBalance(originCard.getBalance() - payLoan.getMonthlyPayment());
 
         loanRequested.setAmount(loanRequested.getAmount()- payLoan.getMonthlyPayment());
         loanRequested.setPayments(loanRequested.getPayments()- payLoan.getPayments());
 
-        transactionRepository.save(new Transaction(originAccount, originAccount.getNumber(), TransactionType.Payment, payLoan.getMonthlyPayment(),"Payment"+" "+loanRequested.getName()+" "+"loan", "P"+numberDescription, "Mindhub Brothers Bank, Inc.", null, originAccount.getBalance(), LocalDateTime.now()));
+        transactionRepository.save(new Transaction(originAccount, originAccount.getHolder(), originAccount.getNumber(), TransactionType.Payment, payLoan.getMonthlyPayment(),"Payment"+" "+loanRequested.getName()+" "+"loan", "P"+numberDescription, "Mindhub Brothers Bank, Inc.", null, originAccount.getBalance(), LocalDateTime.now()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -126,7 +126,7 @@ public class ClientLoanController {
 
         Card card = cardRepository.findByNumber(payLoanCard.getNumber());
 
-        if(payLoanCard.getNumber().isEmpty() || payLoanCard.getDate().isEmpty() || String.valueOf(payLoanCard.getCvv()).isEmpty() || payLoanCard.getName().isEmpty() || String.valueOf(payLoanCard.getMonthlyPayment()).isEmpty()) {
+        if(payLoanCard.getNumber().isEmpty() || payLoanCard.getDate().isEmpty() || String.valueOf(payLoanCard.getCvv()).isEmpty() || String.valueOf(payLoanCard.getMonthlyPayment()).isEmpty()) {
             return new ResponseEntity<>("The fields cannot be empty.", HttpStatus.FORBIDDEN);
         }
 
@@ -169,7 +169,7 @@ public class ClientLoanController {
         loanRequested.setAmount(loanRequested.getAmount() - payLoanCard.getMonthlyPayment());
         loanRequested.setPayments(loanRequested.getPayments() - payLoanCard.getPayments());
 
-        transactionRepository.save(new Transaction(originAccount, originAccount.getNumber(), TransactionType.Payment, payLoanCard.getMonthlyPayment(),"Payment"+" "+payLoanCard.getName()+" "+"loan", "P"+numberDescription, "Mindhub Brothers Bank, Inc.", null, originAccount.getBalance(), LocalDateTime.now()));
+        transactionRepository.save(new Transaction(originAccount, originAccount.getHolder(), originAccount.getNumber(), TransactionType.Payment, payLoanCard.getMonthlyPayment(),"Payment"+" "+loanRequested.getName()+" "+"loan", "P"+numberDescription, "Mindhub Brothers Bank, Inc.", null, originAccount.getBalance(), LocalDateTime.now()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -183,7 +183,7 @@ public class ClientLoanController {
         ClientLoan loanRequested = clientLoanRepository.findById(payLoanCard.getId()).orElse(null);
         CreditCard creditCard = creditCardRepository.findByNumber(payLoanCard.getNumber());
 
-        if(payLoanCard.getNumber().isEmpty() || payLoanCard.getDate().isEmpty() || String.valueOf(payLoanCard.getCvv()).isEmpty() || payLoanCard.getName().isEmpty() || String.valueOf(payLoanCard.getMonthlyPayment()).isEmpty()) {
+        if(payLoanCard.getNumber().isEmpty() || payLoanCard.getDate().isEmpty() || String.valueOf(payLoanCard.getCvv()).isEmpty() || String.valueOf(payLoanCard.getMonthlyPayment()).isEmpty()) {
             return new ResponseEntity<>("The fields cannot be empty.", HttpStatus.FORBIDDEN);
         }
 
@@ -221,7 +221,7 @@ public class ClientLoanController {
         loanRequested.setAmount(loanRequested.getAmount() - payLoanCard.getMonthlyPayment());
         loanRequested.setPayments(loanRequested.getPayments() - payLoanCard.getPayments());
 
-        transactionCardRepository.save(new TransactionCard(creditCard, TransactionType.Debit, "Payment"+" "+payLoanCard.getName()+" "+"loan", "P"+numberDescription, creditCard.getAmountLimit(), creditCard.getBalance(), LocalDateTime.now()));
+        transactionCardRepository.save(new TransactionCard(creditCard, TransactionType.Debit, "Payment"+" "+loanRequested.getName()+" "+"loan", "P"+numberDescription, creditCard.getAmountLimit(), creditCard.getBalance(), LocalDateTime.now()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

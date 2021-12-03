@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 public class TransactionDTO {
 
     private Long id;
+    private String holder1;
     private String account1;
     private TransactionType type;
     private double amount;
@@ -25,6 +26,7 @@ public class TransactionDTO {
 
     public TransactionDTO(Transaction transaction) {
         this.id = transaction.getId();
+        this.holder1 = transaction.getHolder1();
         this.account1 = transaction.getAccount1();
         this.account = transaction.getAccount();
         this.type = transaction.getType();
@@ -39,6 +41,7 @@ public class TransactionDTO {
 
     //GETTER
     public Long getId() {return id;}
+    public String getHolder1() {return holder1;}
     public String getAccount1() {return account1;}
     public TransactionType getType() {return type;}
     public double getAmount() {return amount;}
@@ -51,6 +54,7 @@ public class TransactionDTO {
 
     //SETTER
     public void setId(Long id) {this.id = id;}
+    public void setHolder1(String holder1) {this.holder1 = holder1;}
     public void setAccount1(String account1) {this.account1 = account1;}
     public void setType(TransactionType type) {this.type = type;}
     public void setAmount(double amount) {this.amount = amount;}

@@ -187,15 +187,9 @@
                         </li>
                     </ul>
                     <div class="row g-0 justify-content-between" v-if="debitCards.length > 0">
-                        <div class="col-md-8">
-                            <a class="form-check form-switch" style="float: right;">
-                                <input v-model="showDebit" id="debit" class="form-check-input" type="checkbox">
-                                <label class="form-check-label" for="debit" style="color: black;"> Show number card</label>
-                            </a>
-                        </div>
                         <div class="col-sm-5">
                             <div class="card" id="cards" v-for="card in debitCards" style="margin-top: .5rem;">
-                                    <div class="card-body" id="card-client" v-if="card.accountCards != ''">
+                                <div class="card-body" id="card-client" v-if="card.accountCards != '' && hiddenCVV">
                                     <div class="row g-0">
                                         <img src="../assets/logo-card.png" alt="Logo Card" style="width: 50px; height: 40px;" class="logo-card">
                                         <div class="col" v-if="momentCard(card.thruDate) === dateNow" style="margin-left: 1rem;">
@@ -219,17 +213,22 @@
                                         </div>
                                     </div>
                                     <div class="row g-0">
-                                        <p class="col-10" v-if="showDebit" id="number-card">{{card.number}}</p>
-                                        <p class="col-10" v-else id="number-card">**** **** **** {{card.number.slice(15)}}</p>
+                                        <p class="col-10" v-if="show" id="number-card">{{card.number}}</p>
+                                        <p class="col-10" v-if="hidden" id="number-card">**** **** **** {{card.number.slice(15)}}</p>
+                                        <a class="col-1 align-self-center" aria-current="page" href="" @click.prevent="hiddenNumber(card.id)" style="float: right; margin: 0;" v-if="show"><img src="../assets/hidden.png" alt="Hidden" id="cards" style="margin: 0;" ></a>
+                                        <a class="col-1 align-self-center" aria-current="page" href="" @click.prevent="showNumber(card.id)" style="float: right; margin: 0;" v-if="hidden"><img src="../assets/show.png" alt="Show" id="cards" style="margin: 0;"></a>
                                     </div>
                                     <div class="row g-0">
                                         <p class="col text-center" id="date-card">FROM {{momentCard(card.fromDate)}}</p>
                                         <p class="col text-center" id="date-card">THRU {{momentCard(card.thruDate)}}</p>
                                     </div>
                                     <div class="row g-0">
-                                        <p class="col-9" id="name-card">{{card.cardholder}}</p>
+                                        <p class="col-8" id="name-card">{{card.cardholder}}</p>
                                         <a class="col-1" aria-current="page" :href="'account.html?id=' + card.accountCards[0].accountID" style="float: right; margin: 0;"><img src="../assets/view-details.png" alt="Details" id="cards" style="margin: 0;"></a>
                                         <a class="col-1" aria-current="page" href="" @click.prevent="deleteDebitCard(card.id)" style="float: right; margin: 0;"><img src="../assets/delete.png" alt="Delete" id="cards" style="margin: 0;"></a> 
+                                        <div class="col position-relative">
+                                            <a class="position-absolute bottom-0 end-0" aria-current="page" href="" @click.prevent="showBack" style="float: right; margin: 0;"><img src="../assets/arrow.png" alt="Back" id="cards" style="margin: 0;"></a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-body" id="card-account" v-if="card.accountCards == ''">
@@ -262,7 +261,7 @@
                                         <a class="col-1" aria-current="page" href="" @click.prevent="deleteDebitCard(card.id)" style="float: right; margin: 0;"><img src="../assets/delete.png" alt="Delete" id="cards" style="margin: 0;"></a>     
                                     </div>
                                 </div>
-                                <div class="card-body" id="card-client-back" v-if="card.accountCards != ''">                               
+                                <div class="card-body" id="card-client-back" v-if="card.accountCards != '' &showCVV">                               
                                     <div class="row g-0 position-relative" id="magnetic-band">
                                         <img src="../assets/magnetic-band.png" alt="Band" id="magnetic-band">
                                     </div>
@@ -276,33 +275,15 @@
                                         </div>
                                         <div class="col align-self-center position-relative">
                                             <img src="../assets/cvv.png" alt="CVV" class="position-absolute top-0 star-0 translate-middle-y" height="20">
-                                            <p class="position-absolute position-absolute top-0 star-0 translate-middle-y" v-if="showDebit" id="cvv">{{card.cvv}}</p>
-                                            <p class="position-absolute position-absolute top-0 star-0 translate-middle-y" v-else id="cvv">&#149&#149&#149</p>
+                                            <p class="position-absolute position-absolute top-0 star-0 translate-middle-y" v-if="show" id="cvv">{{card.cvv}}</p>
+                                            <p class="position-absolute position-absolute top-0 star-0 translate-middle-y" v-if="hidden" id="cvv">&#149&#149&#149</p>
                                         </div>
                                     </div>
                                     <div class="row g-0">
                                         <p id="condition">This card is property of Mindhub Brothers Bank. Misuse is criminal offence. If found, please return to Mindhub Brothers Bank or to the nearest bank.</p>
                                     </div>
-                                </div>
-                                <div class="card-body" id="card-account-back" v-if="card.accountCards == ''">                               
-                                    <div class="row g-0 position-relative" id="magnetic-band">
-                                        <img src="../assets/magnetic-band.png" alt="Band" id="magnetic-band">
-                                    </div>
-                                    <div class="row g-0">
-                                        <div class="col text-center" id="hologram">
-                                            <img src="../assets/hologram.png" alt="Hologram" height="55">
-                                        </div>
-                                        <div class="col align-self-center position-relative" id="information">
-                                            <img src="../assets/trazado.png" alt="Trazado" class="position-absolute top-0 end-0 translate-middle-y" height="30">
-                                            <p class="position-absolute position-absolute top-0 end-0 translate-middle-y" id="number-back">{{card.number.slice(15)}}</p>
-                                        </div>
-                                        <div class="col align-self-center position-relative">
-                                            <img src="../assets/cvv.png" alt="CVV" class="position-absolute top-0 star-0 translate-middle-y" height="20">
-                                            <p class="position-absolute position-absolute top-0 star-0 translate-middle-y" id="cvv">&#149&#149&#149</p>
-                                        </div>
-                                    </div>
-                                    <div class="row g-0">
-                                        <p id="condition">This card is property of Mindhub Brothers Bank. Misuse is criminal offence. If found, please return to Mindhub Brothers Bank or to the nearest bank.</p>
+                                    <div class="row g-0" style="float: right; margin: 0;">
+                                        <a class="col" aria-current="page" href="" @click.prevent="showFront" style="float: right; margin: 0;"><img src="../assets/arrow.png" alt="Back" id="cards" style="margin: 0;"></a>
                                     </div>
                                 </div>
                             </div>

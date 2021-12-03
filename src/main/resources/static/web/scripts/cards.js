@@ -7,7 +7,8 @@ const app = Vue.createApp({
             debitCards: [],
             creditCards: [],
             dateNow: "",
-            showDebit: false, showCredit: false
+            show: false, hidden: true,
+            showCVV: false, hiddenCVV: true
         }
     },
     created(){
@@ -70,6 +71,22 @@ const app = Vue.createApp({
                     return 0
                 }
             })
+        },
+        showNumber(id){
+            this.show = true
+            this.hidden = false
+        },
+        hiddenNumber(id){
+            this.show = false
+            this.hidden = true
+        },
+        showBack(){
+            this.hiddenCVV = false
+            this.showCVV = true
+        },
+        showFront(){
+            this.hiddenCVV = true
+            this.showCVV = false
         },
         renovateDebitCard(id){
             const urlParams = new URLSearchParams(window.location.search);
