@@ -34,11 +34,8 @@ public class HomebankingApplication {
 			int minID = 10;
 			int maxID = 99;
 
-            Account account1 = new Account(client1,"VIN-000001/18",AccountType.Checking,LocalDateTime.now(),5000);
-			Account account2 = new Account(client1,"VIN-000002/29",AccountType.Savings,LocalDateTime.now().plusDays(1),7500);
-
-			//Account account1 = new Account(client1,"VIN-"+(int)((Math.random()*(maxAccount-minAccount+1))+minAccount)+"/"+(int)((Math.random()*(maxID-minID+1))+minID),AccountType.Checking,LocalDateTime.now(),5000);
-			//Account account2 = new Account(client1,"VIN-"+(int)((Math.random()*(maxAccount-minAccount+1))+minAccount)+"/"+(int)((Math.random()*(maxID-minID+1))+minID),AccountType.Savings,LocalDateTime.now().plusDays(1),7500);
+			Account account1 = new Account(client1,"VIN-"+(int)((Math.random()*(maxAccount-minAccount+1))+minAccount)+"/"+(int)((Math.random()*(maxID-minID+1))+minID),AccountType.Checking,LocalDateTime.now(),5000);
+			Account account2 = new Account(client1,"VIN-"+(int)((Math.random()*(maxAccount-minAccount+1))+minAccount)+"/"+(int)((Math.random()*(maxID-minID+1))+minID),AccountType.Savings,LocalDateTime.now().plusDays(1),7500);
 			Account account3 = new Account(client2,"VIN-"+(int)((Math.random()*(maxAccount-minAccount+1))+minAccount)+"/"+(int)((Math.random()*(maxID-minID+1))+minID),AccountType.Checking,LocalDateTime.now(),8000);
 			Account account4 = new Account(client2,"VIN-"+(int)((Math.random()*(maxAccount-minAccount+1))+minAccount)+"/"+(int)((Math.random()*(maxID-minID+1))+minID),AccountType.Savings,LocalDateTime.now().plusDays(1),6500);
 
