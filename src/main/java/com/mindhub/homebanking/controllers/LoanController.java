@@ -142,6 +142,10 @@ public class LoanController {
             return new ResponseEntity<>("The amount cannot be negative.", HttpStatus.FORBIDDEN);
         }
 
+        if(loan.getAmount() < 20000){
+            return new ResponseEntity<>("The minimum amount is $20,000.00.", HttpStatus.FORBIDDEN);
+        }
+
         if(loan.getAmount() > loanRequest.getMaxAmount()){
             return new ResponseEntity<>("The amount requested exceeds the maximum amount.", HttpStatus.FORBIDDEN);
         }
