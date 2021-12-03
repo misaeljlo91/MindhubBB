@@ -230,8 +230,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="validationDefault05" class="form-label" id="formulary_1">Description:</label>
-                                <textarea v-model="data.description" maxlength="80" class="form-control" id="validationDefault05" rows="3" required></textarea>
-                                <p id="counter">{{counter}}/80</p>
+                                <textarea v-model="data.description" maxlength="20" class="form-control" id="validationDefault05" rows="3" required></textarea>
+                                <p id="counter">{{counter}}/20</p>
                             </div>
                             <div class="form-floating" id="add-client">
                                 <input class="btn btn-primary" type="submit" v-if="none" value="Transfer" id="formulary_sign" style="margin-right: .5rem;" @click.prevent="transferMoney">
